@@ -10,7 +10,7 @@ export const getDecodedToken = async () => {
   return res;
 };
 
-export const register = async (data) => {
+export const registerUser = async (data) => {
   const res = await axios.post(`/users`, data);
   return res;
 };

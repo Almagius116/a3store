@@ -1,14 +1,12 @@
 import { cn } from "../../lib/utils";
 
-const InputText = ({ placeholder, className, onChange }) => {
+const InputText = ({ className, ...props }) => {
   return (
     <>
       <input
-        type="text"
-        onChange={onChange}
-        placeholder={placeholder}
+        {...props}
         className={cn(
-          "w-40 focus:outline-none rounded-4xl bg-gray-100 px-4 py-2.5 text-gray-600 placeholder:text-center text-center",
+          "w-40 focus:outline-none rounded-xl bg-gray-100 px-5 py-3 text-gray-600 placeholder:text-start text-start text-sm",
           className
         )}
       />
