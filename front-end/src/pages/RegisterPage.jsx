@@ -15,7 +15,6 @@ const RegisterPage = () => {
   const handleRegister = async (data) => {
     try {
       const { fullName, email, password } = data;
-      console.log(fullName, email, password);
       const res = await registerUser({ fullName, email, password });
       console.log(res);
     } catch (err) {

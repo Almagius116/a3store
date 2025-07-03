@@ -1,24 +1,17 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Button from "./buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { plusQty, minusQty, remove } from "../features/cart/cartSlice";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const CartItem = () => {
-  const items = useSelector((state) => state.cart.items);
-  const [totalPrice, setTotalPrice] = useState(0);
+const CartItem = ({ items, totalPrice }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const nav = (id) => {
     navigate(`/detail-product/${id}`);
   };
-
-  useEffect(() => {
-    const total = items.reduce((sum, item) => sum + item.totalPriceProduct, 0);
-    setTotalPrice(total);
-  }, [items]);
 
   return (
     <>

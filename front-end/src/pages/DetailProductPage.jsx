@@ -63,8 +63,8 @@ const DetailProductPage = () => {
                         id: product.id,
                         name: product.name,
                         qty: counter,
-                        price: parseInt(product.price),
-                        totalPriceProduct: parseInt(product.price) * counter,
+                        price: parseFloat(product.price),
+                        totalPriceProduct: parseFloat(product.price) * counter,
                       })
                     )
                   }

@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Order.belongsTo(models.User, { foreignKey: "userId", as: "user" });
-      Order.hasMany(models.OrderItems, {
+      Order.hasMany(models.OrderItem, {
         foreignKey: "orderId",
-        as: "orderItems",
+        as: "orderItem",
       });
       Order.hasOne(models.Payment, { foreignKey: "orderId", as: "payment" });
       Order.hasOne(models.Shipping, { foreignKey: "orderId", as: "shipping" });

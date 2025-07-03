@@ -1,4 +1,4 @@
-const { Order } = require("../models");
+const { Order, OrderItem, sequelize } = require("../models");
 
 const getAllOrder = async () => {
   return await Order.findAll({
@@ -7,7 +7,32 @@ const getAllOrder = async () => {
 };
 
 const createOrder = async (data) => {
-  return await Order.create(data);
+  try {
+    const { userId, items, totalPrice } = data;
+
+    const transaction = await sequelize.transaction();
+
+    const newOrder = await Order.create(
+      { userId, totalPrice },
+      { transaction: transaction }
+    );
+
+    const orderItemsPayload = items.map((item) => ({
+      orderId: newOrder.id,
+      productId: item.productId,
+      quantity: item.quantity,
+      unitPrice: item.unitPrice,
+    }));
+
+    await OrderItem.bulkCreate(orderItemsPayload, { transaction: transaction });
+    await transaction.commit();
+
+    return newOrder;
+  } catch (err) {
+    await transaction.rollback();
+    console.log(err);
+    return null;
+  }
 };
 
 const getOrderById = async (id) => {
