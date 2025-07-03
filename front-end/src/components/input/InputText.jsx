@@ -1,6 +1,7 @@
 import { cn } from "../../lib/utils";
+import ValidationText from "../text/ValidationText";
 
-const InputText = ({ className, ...props }) => {
+const InputText = ({ className, validation, ...props }) => {
   return (
     <>
       <input
@@ -10,6 +11,7 @@ const InputText = ({ className, ...props }) => {
           className
         )}
       />
+      <ValidationText>{validation}</ValidationText>
     </>
   );
 };

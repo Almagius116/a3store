@@ -14,8 +14,9 @@ const LoginPage = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (data) => {
     try {
+      const { email, password } = data;
       await login({ email, password });
       navigate("/");
     } catch (err) {

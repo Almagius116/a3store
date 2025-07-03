@@ -5,7 +5,7 @@ import { getAllProducts } from "../features/products/productService";
 import { useFetch } from "../hooks/useFetch";
 import Carousel from "../components/carousel/carousel";
 import img from "../assets/contoh1.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectionButtonModal from "../components/modal/SelectionButtonModal";
 import { useNavigate } from "react-router-dom";
 
@@ -15,13 +15,15 @@ const HomePage = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const navigate = useNavigate();
 
-  if (selectedOption === "Profile") {
-    navigate("/profile");
-  }
-
   const handleSelect = (option) => {
     setSelectedOption(option);
   };
+
+  useEffect(() => {
+    if (selectedOption === "Profile") {
+      navigate("/profile");
+    }
+  }, [selectedOption]);
 
   if (loading) return <p>Loading ...</p>;
   if (error) return <p>Terjadi Error: {error.message}</p>;
@@ -31,11 +33,11 @@ const HomePage = () => {
   return (
     <>
       <div className="w-screen flex flex-col items-center">
-        <Navbar profile={() => setProfileMenuModal(true)} />
+        <Navbar userInfo={() => setProfileMenuModal(true)} />
         <SelectionButtonModal
           isOpen={profileMenuModal}
           onClose={() => setProfileMenuModal(false)}
-          options={["Profile", "History", "Logout"]}
+          options={["Profile", "Notification", "History", "Orders", "Logout"]}
           onSelect={handleSelect}
         />
         <Carousel images={images} />

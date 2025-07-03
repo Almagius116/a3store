@@ -1,31 +1,25 @@
-import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
-import { profile } from "../features/user/userService";
-import { useCallback, useEffect } from "react";
-import { useFetch } from "../hooks/useFetch";
-import InputText from "../components/input/InputText";
+import OrdersSection from "../components/section/OrdersSection";
+import ProfileSection from "../components/section/ProfileSection";
+import SelectionInfoButton from "../components/section/SelectionInfoButton";
 
 const ProfilePage = () => {
-  const id = useSelector((state) => state.user.user.id);
-  const getUser = useCallback(() => profile(id), [id]);
-  const { data: user, loading, error } = useFetch(getUser);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
-
-  if (loading) return <p>Loading produk...</p>;
-  if (error) return <p>Terjadi error: {error.message}</p>;
-
   return (
     <>
       <Navbar />
-      <div className="flex">
-        <section className="bg-amber-300 w-[35%] h-96"></section>
-        <section className="bg-amber-200 w-[65%] h-96"></section>
+      <div className="w-full flex flex-col items-center">
+        <div className="w-[80%] bg-black/5 p-10 pb-16 rounded-md mt-10 ">
+          <div className="flex w-full gap-5">
+            <div className="w-[35%]">
+              <SelectionInfoButton />
+            </div>
+            <div className="w-[65%]">
+              {/* <ProfileSection /> */}
+              <OrdersSection />
+            </div>
+          </div>
+        </div>
+        <div className="mt-10 bg-gray-900 h-72 w-full "></div>
       </div>
     </>
   );

@@ -1,14 +1,15 @@
 import {
   MagnifyingGlassIcon,
-  ShoppingBagIcon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
 import LinkButton from "./link/LinkButton";
 import LinkIcon from "./link/LinkIcon";
 import Button from "./buttons/Button";
 import { useAuthCheck } from "../hooks/useAuthCheck";
 import { useSelector } from "react-redux";
+import logo from "../assets/logo.png";
 
-const Navbar = ({ profile }) => {
+const Navbar = ({ userInfo }) => {
   const isAuthenticated = useAuthCheck();
   const user = useSelector((state) => state.user.user);
 
@@ -18,7 +19,9 @@ const Navbar = ({ profile }) => {
     <>
       <div className="w-screen py-2 px-[10%] shadow-md">
         <div className="w-full flex justify-between p-2 items-center">
-          <div>Logo</div>
+          <div>
+            <img src={`${logo}`} alt="" className="w-14 h-14" />
+          </div>
           <div className="flex rounded-lg bg-gray-100">
             <input
               type="text"
@@ -42,11 +45,11 @@ const Navbar = ({ profile }) => {
             {isAuthenticated ? (
               <>
                 <LinkIcon dest={"/cart"}>
-                  <ShoppingBagIcon className="h-7 w-7" />
+                  <ShoppingCartIcon className="h-7 w-7" />
                 </LinkIcon>
 
                 <Button
-                  onClick={profile}
+                  onClick={userInfo}
                   className={
                     "w-12 h-12 rounded-2xl p-[1.5px] bg-green-300 hover:bg-green-700"
                   }
