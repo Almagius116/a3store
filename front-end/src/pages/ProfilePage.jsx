@@ -1,9 +1,30 @@
+import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../components/Navbar";
 import OrdersSection from "../components/section/OrdersSection";
 import ProfileSection from "../components/section/ProfileSection";
 import SelectionInfoButton from "../components/section/SelectionInfoButton";
+import { useEffect, useState } from "react";
+import { add } from "../features/info/infoSlice";
 
 const ProfilePage = () => {
+  const info = useSelector((state) => state.info.info);
+  const [selectedOption, setSelectedOption] = useState(info.selectedInfo);
+  const dispatch = useDispatch();
+
+  const handleSelect = (option) => {
+    setSelectedOption(option);
+  };
+
+  useEffect(() => {
+    if (selectedOption !== null) {
+      dispatch(
+        add({
+          selectedInfo: selectedOption,
+        })
+      );
+    }
+  }, [selectedOption]);
+
   return (
     <>
       <Navbar />
@@ -11,11 +32,16 @@ const ProfilePage = () => {
         <div className="w-[80%] bg-black/5 p-10 pb-16 rounded-md mt-10 ">
           <div className="flex w-full gap-5">
             <div className="w-[35%]">
-              <SelectionInfoButton />
+              <SelectionInfoButton onClickSelect={handleSelect} />
             </div>
             <div className="w-[65%]">
-              {/* <ProfileSection /> */}
-              <OrdersSection />
+              {selectedOption === "Profile" ? (
+                <ProfileSection />
+              ) : selectedOption === "Orders" ? (
+                <OrdersSection />
+              ) : (
+                <ProfileSection />
+              )}
             </div>
           </div>
         </div>

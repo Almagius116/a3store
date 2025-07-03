@@ -5,25 +5,34 @@ import { getAllProducts } from "../features/products/productService";
 import { useFetch } from "../hooks/useFetch";
 import Carousel from "../components/carousel/carousel";
 import img from "../assets/contoh1.jpg";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SelectionButtonModal from "../components/modal/SelectionButtonModal";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { add } from "../features/info/infoSlice";
 
 const HomePage = () => {
-  const { data: products, loading, error } = useFetch(getAllProducts);
+  const getProducts = useCallback(() => getAllProducts(), []);
+  const { data: products, loading, error } = useFetch(getProducts);
   const [profileMenuModal, setProfileMenuModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (selectedOption !== null) {
+      dispatch(
+        add({
+          selectedInfo: selectedOption,
+        })
+      );
+    }
+  }, [selectedOption]);
 
   const handleSelect = (option) => {
     setSelectedOption(option);
+    navigate("/profile");
   };
-
-  useEffect(() => {
-    if (selectedOption === "Profile") {
-      navigate("/profile");
-    }
-  }, [selectedOption]);
 
   if (loading) return <p>Loading ...</p>;
   if (error) return <p>Terjadi Error: {error.message}</p>;
@@ -32,7 +41,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="w-screen flex flex-col items-center">
+      <div className="flex flex-col items-center">
         <Navbar userInfo={() => setProfileMenuModal(true)} />
         <SelectionButtonModal
           isOpen={profileMenuModal}

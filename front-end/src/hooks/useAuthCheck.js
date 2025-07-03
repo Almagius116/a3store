@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getDecodedToken } from "../features/auth/authService";
 import { add } from "../features/auth/authSlice";
+import { resetUser } from "../features/auth/authSlice";
+import { resetInfo } from "../features/info/infoSlice";
+import { resetCart } from "../features/cart/cartSlice";
 
 export const useAuthCheck = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -24,6 +27,9 @@ export const useAuthCheck = () => {
         );
         setIsAuthenticated(true);
       } catch (err) {
+        dispatch(resetUser());
+        dispatch(resetInfo());
+        dispatch(resetCart());
         setIsAuthenticated(false);
       }
     };

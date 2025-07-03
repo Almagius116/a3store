@@ -34,12 +34,12 @@ const cartSlice = createSlice({
         console.log(err);
       }
     },
-    reset: () => {
+    resetCart: () => {
       return { ...initialState };
     },
   },
 });
 
-export const { add, plusQty, minusQty, remove, reset } = cartSlice.actions;
+export const { add, plusQty, minusQty, remove, resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
