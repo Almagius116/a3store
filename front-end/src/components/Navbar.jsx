@@ -7,7 +7,7 @@ import LinkIcon from "./link/LinkIcon";
 import Button from "./buttons/Button";
 import { useAuthCheck } from "../hooks/useAuthCheck";
 import { useSelector } from "react-redux";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo-bg-none.png";
 
 const Navbar = ({ userInfo }) => {
   const isAuthenticated = useAuthCheck();
@@ -17,7 +17,7 @@ const Navbar = ({ userInfo }) => {
 
   return (
     <>
-      <div className="w-screen py-2 px-[10%] shadow-md">
+      <div className="w-full py-2 px-[10%] shadow-md">
         <div className="w-full flex justify-between p-2 items-center">
           <div>
             <img src={`${logo}`} alt="" className="w-14 h-14" />
@@ -36,7 +36,7 @@ const Navbar = ({ userInfo }) => {
             <LinkButton
               dest={"/"}
               className={
-                "bg-white text-gray-500 shadow-none hover:bg-white hover:text-gray-700 p-1"
+                "bg-white/0 text-gray-500 shadow-none hover:bg-white/0 hover:text-gray-700 p-1"
               }
             >
               Home

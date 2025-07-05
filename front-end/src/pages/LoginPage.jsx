@@ -26,7 +26,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <div className="bg-indigo-400 w-screen h-screen">
+      <div className="bg-indigo-400 w-full h-full">
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
           <InputCard className={"bg-white/45 grid gap-1.5 h-96"}>
             <div className=""></div>

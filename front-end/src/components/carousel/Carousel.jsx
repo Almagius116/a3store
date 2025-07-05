@@ -13,7 +13,7 @@ const Carousel = ({ images }) => {
     setCurrentIndex(isLast ? 0 : currentIndex + 1);
   };
   return (
-    <div className="relative w-[90%] overflow-hidden">
+    <div className="mt-5 rounded-2xl relative w-[90%] overflow-hidden">
       {/* Slides */}
       <div
         className="flex transition-transform duration-500"
