@@ -6,6 +6,7 @@ import DetailProductPage from "../pages/DetailProductPage";
 import CartPage from "../pages/CartPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 import ProfilePage from "../pages/ProfilePage";
+import OrderPage from "../pages/OrderPage";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ProfilePage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/order/:id",
+    element: (
+      <ProtectedRoute>
+        <OrderPage />
       </ProtectedRoute>
     ),
   },

@@ -5,3 +5,8 @@ export const createOrder = async (data) => {
   console.log("res", res);
   return res;
 };
+
+export const getOrderById = async (id) => {
+  const res = await axios.get(`/orders/${id}`);
+  return res.data.data.order;
+};

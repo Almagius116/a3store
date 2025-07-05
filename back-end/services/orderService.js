@@ -1,4 +1,4 @@
-const { Order, OrderItem, sequelize } = require("../models");
+const { Order, OrderItem, User, sequelize } = require("../models");
 
 const getAllOrder = async () => {
   return await Order.findAll({
@@ -36,7 +36,20 @@ const createOrder = async (data) => {
 };
 
 const getOrderById = async (id) => {
-  return await Order.findByPk(id);
+  const order = await Order.findByPk(id, {
+    include: [
+      {
+        model: User,
+        as: "user",
+      },
+      {
+        model: OrderItem,
+        as: "orderItem",
+      },
+    ],
+  });
+  if (!order) return null;
+  return order;
 };
 
 const updateOrder = async (id, data) => {

@@ -19,6 +19,14 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
+      midtransOrderId: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      paymentToken: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       paymentDate: {
         type: Sequelize.DATE,
       },
@@ -33,6 +41,10 @@ module.exports = {
       status: {
         type: Sequelize.ENUM("success", "failed", "pending"),
         defaultValue: "pending",
+      },
+      transactionId: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
