@@ -1,6 +1,6 @@
 import ValidationText from "../text/ValidationText";
 
-const AuthInputText = ({ validation, ...props }) => {
+const AuthInputText = ({ children, validation, ...props }) => {
   return (
     <>
       <input

@@ -4,8 +4,13 @@ import AuthInputText from "../components/input/AuthInputText";
 import LinkButton from "../components/link/LinkButton";
 import { registerUser } from "../features/auth/authService";
 import { useForm } from "react-hook-form";
+import img from "../assets/logo-bg-none.png";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 const RegisterPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -22,21 +27,34 @@ const RegisterPage = () => {
     }
   };
 
+  const handleShowPassword = () => {
+    if (showPassword) {
+      setShowPassword(false);
+    } else {
+      setShowPassword(true);
+    }
+  };
+
   return (
     <>
       <div className="w-full h-full bg-indigo-400 flex">
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
           <InputCard className={"h-[420px] bg-white/45"}>
+            <div className="absolute top-[15%] left-1/2 -translate-x-1/2">
+              <img className="w-16 h-16" src={img} />
+            </div>
             <div className="absolute top-1/2 -translate-y-[25%] left-1/2 -translate-x-1/2">
               <form onSubmit={handleSubmit((data) => handleRegister(data))}>
                 <AuthInputText
-                  {...register("fullName", { required: "This is required" })}
+                  {...register("fullName", {
+                    required: "Full Name is required",
+                  })}
                   placeholder={"Full Name"}
                   validation={errors.fullName?.message}
                 />
                 <AuthInputText
                   {...register("email", {
-                    required: "This is required",
+                    required: "Email is required",
                     pattern: {
                       value: /^[^@]+@[^@]+\.[^@]+$/,
                       message: "Email is not valid",
@@ -45,17 +63,30 @@ const RegisterPage = () => {
                   placeholder={"Email"}
                   validation={errors.email?.message}
                 />
-                <AuthInputText
-                  {...register("password", {
-                    required: "This is required",
-                    minLength: {
-                      value: 8,
-                      message: "Min length is 8",
-                    },
-                  })}
-                  placeholder={"Password"}
-                  validation={errors.password?.message}
-                />
+                <div className="relative">
+                  <AuthInputText
+                    type={showPassword ? "text" : "password"}
+                    {...register("password", {
+                      required: "Password is required",
+                      minLength: {
+                        value: 8,
+                        message: "Min length is 8",
+                      },
+                    })}
+                    placeholder={"Password"}
+                    validation={errors.password?.message}
+                  />
+                  <div
+                    onClick={handleShowPassword}
+                    className="absolute top-2 right-0 cursor-pointer"
+                  >
+                    {showPassword ? (
+                      <EyeIcon className="w-4 h-4 text-gray-500" />
+                    ) : (
+                      <EyeSlashIcon className="w-4 h-4 text-gray-500" />
+                    )}
+                  </div>
+                </div>
                 <div className="flex text-[13px] justify-center gap-1 mt-1">
                   <p>Already have an account?</p>
                   <LinkButton
