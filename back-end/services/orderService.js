@@ -1,4 +1,4 @@
-const { Order, OrderItem, User, sequelize } = require("../models");
+const { Order, OrderItem, User, Product, sequelize } = require("../models");
 
 const getAllOrder = async () => {
   return await Order.findAll({
@@ -45,6 +45,12 @@ const getOrderById = async (id) => {
       {
         model: OrderItem,
         as: "orderItem",
+        include: [
+          {
+            model: Product,
+            as: "product",
+          },
+        ],
       },
     ],
   });

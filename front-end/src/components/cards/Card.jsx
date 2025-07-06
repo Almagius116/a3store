@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { rupiahFormat } from "../../utils/helper";
 
 const Card = ({ product }) => {
   const navigate = useNavigate();
@@ -6,7 +7,7 @@ const Card = ({ product }) => {
   const handleClick = (id) => {
     navigate(`/detail-product/${id}`);
   };
-
+  console.log(product);
   return (
     <>
       <div
@@ -14,10 +15,15 @@ const Card = ({ product }) => {
         onClick={() => handleClick(product.id)}
       >
         <div className="grid p-1.5">
-          <div className="h-28 bg-gray-400 rounded-md"></div>
+          <div className="h-28 rounded-md overflow-hidden">
+            <img
+              className="w-full h-full object-cover rounded-md"
+              src={product.images[0]}
+            />
+          </div>
           <div className="grid items-center text-xs p-1.5 gap-2">
             <p>{product.name}</p>
-            <p>Price : {product.price.toLocaleString("id-ID")}</p>
+            <p>{rupiahFormat(product.price)}</p>
             <p>Stock : {product.stock}</p>
           </div>
         </div>

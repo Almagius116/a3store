@@ -19,11 +19,23 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "SET NULL",
       },
+      recipientName: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      phoneNumber: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       address: {
         allowNull: false,
         type: Sequelize.TEXT,
       },
       city: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      province: {
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -34,9 +46,25 @@ module.exports = {
       shippingDate: {
         type: Sequelize.DATE,
       },
+      shippingMethod: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        defaultValue: "N/A",
+      },
+      status: {
+        type: Sequelize.ENUM(
+          "pending",
+          "shipped",
+          "in_transit",
+          "delivered",
+          "failed"
+        ),
+        defaultValue: "pending",
+      },
       trackingNumber: {
         allowNull: false,
         type: Sequelize.STRING,
+        defaultValue: "N/A",
       },
       createdAt: {
         allowNull: false,

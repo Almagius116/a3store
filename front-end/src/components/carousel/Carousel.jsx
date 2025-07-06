@@ -16,14 +16,14 @@ const Carousel = ({ images }) => {
     <div className="mt-5 rounded-2xl relative w-[90%] overflow-hidden">
       {/* Slides */}
       <div
-        className="flex transition-transform duration-500"
+        className="flex transition-transform duration-500 h-[400px]"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {images.map((img, idx) => (
           <img
             key={idx}
             src={img}
-            className="w-full h-[400px] object-cover flex-shrink-0"
+            className="w-full h-full object-cover flex-shrink-0"
             alt={`Slide ${idx}`}
           />
         ))}

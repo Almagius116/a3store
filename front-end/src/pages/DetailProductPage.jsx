@@ -7,6 +7,8 @@ import { add } from "../features/cart/cartSlice";
 import Navbar from "../components/Navbar";
 import Button from "../components/buttons/Button";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import ReviewsSection from "../components/section/ReviewsSection";
+import { rupiahFormat } from "../utils/helper";
 
 const DetailProductPage = () => {
   const { id } = useParams();
@@ -28,13 +30,18 @@ const DetailProductPage = () => {
         <Navbar />
         <section className="mt-20 w-full bg-gray-100 h-96 flex justify-center">
           <div className="w-[75%] max-w-[877px] flex gap-8 py-3.5">
-            <div className="h-full bg-amber-200 w-[50%]  rounded-2xl"></div>
+            <div className="h-full bg-amber-200 w-[50%]  rounded-2xl">
+              <img
+                className="h-full w-full object-cover rounded-2xl"
+                src={product.images[0]}
+              />
+            </div>
             <div className="h-full w-1/3 max-w-[276px] flex flex-col gap-2.5 p-4">
               <p className="text-2xl font-bold">{product.name}</p>
               <div className="bg-gray-200 w-full h-[1px]"></div>
               <div className="py-4 flex flex-col gap-2.5">
                 <p className="text-gray-500 font-semibold">
-                  Rp. {product.price}
+                  {rupiahFormat(product.price)}
                 </p>
                 <p className="text-gray-500 font-semibold">
                   Stock : {product.stock}
@@ -106,18 +113,12 @@ const DetailProductPage = () => {
               </Button>
             </div>
             {selected === "review" ? (
-              <div className="w-full pb-32 grid grid-cols-1 gap-2.5">
-                <div className="bg-amber-600 flex items-center p-3">
-                  <div className="h-9 w-9 bg-amber-200"></div>
-                </div>
-
-                <div className="h-6 bg-amber-600"></div>
-
-                <div className="h-6 bg-amber-600"></div>
-              </div>
+              <ReviewsSection />
             ) : (
               <div className="w-full pb-32">
-                <div className="w-full h-6 bg-amber-500">sdawaw</div>
+                <div className="w-full p-7 px-4 bg-gray-200 rounded-b-xl">
+                  {product.description}
+                </div>
               </div>
             )}
           </div>

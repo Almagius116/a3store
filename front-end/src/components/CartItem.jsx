@@ -4,6 +4,7 @@ import Button from "./buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { plusQty, minusQty, remove } from "../features/cart/cartSlice";
 import { MinusIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { rupiahFormat } from "../utils/helper";
 
 const CartItem = ({ items, totalPrice }) => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ const CartItem = ({ items, totalPrice }) => {
                       <XMarkIcon className="w-4 h-4 text-gray-500 hover:text-gray-800" />
                     </Button>
                   </div>
-                  Rp. {item.totalPriceProduct}
+                  {rupiahFormat(item.totalPriceProduct)}
                 </td>
               </tr>
             ))}
@@ -90,7 +91,9 @@ const CartItem = ({ items, totalPrice }) => {
               <td className="whitespace-nowrap px-6 py-8 font-medium">Total</td>
               <td className="whitespace-nowrap px-6 py-8"></td>
               <td className="whitespace-nowrap px-6 py-8"></td>
-              <td className="whitespace-nowrap px-6 py-8">Rp. {totalPrice}</td>
+              <td className="whitespace-nowrap px-6 py-8">
+                {rupiahFormat(totalPrice)}
+              </td>
             </tr>
           </tbody>
         </table>

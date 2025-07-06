@@ -36,6 +36,9 @@ module.exports = {
       },
       images: {
         type: Sequelize.ARRAY(Sequelize.TEXT),
+        defaultValue: [
+          "https://ik.imagekit.io/a3store/imageicon-removebg-preview.png?updatedAt=1751747756275",
+        ],
       },
       createdAt: {
         allowNull: false,

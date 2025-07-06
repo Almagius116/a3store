@@ -8,6 +8,8 @@ import {
   createPayment,
 } from "../features/payment/paymentService";
 import Button from "../components/buttons/Button";
+import OrderItemsSection from "../components/section/OrderItemsSection";
+import FormShippingSection from "../components/section/FormShippingSection";
 
 const OrderPage = () => {
   const { id } = useParams();
@@ -19,6 +21,8 @@ const OrderPage = () => {
 
   if (loading) return <p>Loading produk...</p>;
   if (error) return <p>Terjadi error: {error.message}</p>;
+
+  console.log(order);
 
   const handlePayment = async (order) => {
     try {
@@ -57,8 +61,16 @@ const OrderPage = () => {
     <>
       <Navbar />
       <div className="w-full h-full flex justify-center">
-        <div className="w-[80%] h-[50%] bg-amber-200">
-          <Button onClick={() => handlePayment(order)}>bayar</Button>
+        <div className="w-[80%] bg-gray-50 mt-6 shadow-md rounded-xl p-10 lg:px-20">
+          <div className="w-full h-full flex flex-col gap-10">
+            <div className="flex justify-center text-2xl font-bold text-gray-500">
+              ORDER-{order.id}
+            </div>
+            <div className="grid gap-32">
+              <OrderItemsSection order={order} />
+              <FormShippingSection />
+            </div>
+          </div>
         </div>
       </div>
     </>
