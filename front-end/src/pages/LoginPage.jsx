@@ -1,14 +1,14 @@
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { login } from "../features/auth/authService";
 import Button from "../components/buttons/Button";
 import InputCard from "../components/cards/InputCard";
 import LinkButton from "../components/link/LinkButton";
-import { login } from "../features/auth/authService";
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import AuthInputText from "../components/input/AuthInputText";
-import img from "../assets/logo-bg-none.png";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
 import Modal from "../components/modal/Modal";
+import img from "../assets/logo-bg-none.png";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);

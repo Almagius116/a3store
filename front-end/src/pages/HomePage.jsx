@@ -1,17 +1,17 @@
-import Category from "../components/Category";
-import Navbar from "../components/Navbar";
-import Carousel from "../components/carousel/carousel";
-import img from "../assets/contoh1.jpg";
 import { useCallback, useEffect, useState } from "react";
-import SelectionButtonModal from "../components/modal/SelectionButtonModal";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { add } from "../features/info/infoSlice";
-import CheckBoxInput from "../components/input/CheckBoxInput";
-import PaginationSection from "../components/section/PaginationSection";
 import { getAllCategory } from "../features/categories/categoriesService";
 import { useFetch } from "../hooks/useFetch";
+import Category from "../components/Category";
+import Navbar from "../components/Navbar";
+import Carousel from "../components/carousel/carousel";
+import SelectionButtonModal from "../components/modal/SelectionButtonModal";
+import CheckBoxInput from "../components/input/CheckBoxInput";
+import PaginationSection from "../components/section/PaginationSection";
 import Button from "../components/buttons/Button";
+import img from "../assets/contoh1.jpg";
 
 const HomePage = () => {
   const navigate = useNavigate();

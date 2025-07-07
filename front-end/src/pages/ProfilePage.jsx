@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { add } from "../features/info/infoSlice";
 import Navbar from "../components/Navbar";
 import OrdersSection from "../components/section/OrdersSection";
 import ProfileSection from "../components/section/ProfileSection";
 import SelectionInfoButton from "../components/section/SelectionInfoButton";
-import { useEffect, useState } from "react";
-import { add } from "../features/info/infoSlice";
 
 const ProfilePage = () => {
   const info = useSelector((state) => state.info.info);

@@ -2,19 +2,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
-
 import { useAuthCheck } from "../hooks/useAuthCheck";
 import { useFetch } from "../hooks/useFetch";
-
 import { getProductById } from "../features/products/productService";
 import { add } from "../features/cart/cartSlice";
-
+import { rupiahFormat } from "../utils/helper";
 import Navbar from "../components/Navbar";
 import Button from "../components/buttons/Button";
 import ReviewsSection from "../components/section/ReviewsSection";
 import Modal from "../components/modal/Modal";
-
-import { rupiahFormat } from "../utils/helper";
 
 const DetailProductPage = () => {
   const navigate = useNavigate();

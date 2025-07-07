@@ -1,14 +1,14 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { registerUser } from "../features/auth/authService";
+import img from "../assets/logo-bg-none.png";
+import Modal from "../components/modal/Modal";
 import Button from "../components/buttons/Button";
 import InputCard from "../components/cards/InputCard";
 import AuthInputText from "../components/input/AuthInputText";
 import LinkButton from "../components/link/LinkButton";
-import { registerUser } from "../features/auth/authService";
-import { useForm } from "react-hook-form";
-import img from "../assets/logo-bg-none.png";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Modal from "../components/modal/Modal";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
