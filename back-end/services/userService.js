@@ -20,9 +20,21 @@ const getUserById = async (id) => {
 const updateUser = async (id, data) => {
   const user = await User.findByPk(id);
   if (!user) return null;
-  const { fullName, email, password } = data;
-  const hashedPassword = await bcrypt.hash(password, 10);
-  await user.update({ fullName, email, password: hashedPassword });
+  console.log(data);
+  const { fullName, email, password, phoneNumber, address } = data;
+  const updatedData = {
+    fullName,
+    email,
+    phoneNumber,
+    address,
+  };
+
+  if (password && password.trim() !== "") {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    updatedData.password = hashedPassword;
+  }
+
+  await user.update(updatedData);
   return user;
 };
 

@@ -1,23 +1,53 @@
 import { useSelector } from "react-redux";
 import InputText from "../input/InputText";
 import { CameraIcon } from "@heroicons/react/24/solid";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import { profile } from "../../features/user/userService";
+import { editUser, profile } from "../../features/user/userService";
 import Button from "../buttons/Button";
+import { useForm } from "react-hook-form";
+import Modal from "../modal/Modal";
 
 const ProfileSection = () => {
   const id = useSelector((state) => state.user.user.id);
   const getUser = useCallback(() => profile(id), [id]);
   const { data: res, loading, error } = useFetch(getUser);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [message, setMessage] = useState("");
 
   if (loading) return <p>Loading produk...</p>;
   if (error) return <p>Terjadi error: {error.message}</p>;
 
   const user = res.data.data.user;
 
+  const handleUpdate = async (data) => {
+    try {
+      const res = await editUser(id, data);
+      setShowStatusModal(true);
+      setStatus(res.data.status);
+      setMessage("Update profile successful.");
+      setTimeout(() => {
+        setShowStatusModal(false);
+      }, 2000);
+    } catch (err) {
+      setShowStatusModal(true);
+      setStatus(err.response.data.status);
+      setMessage(err.response.data.message);
+      setTimeout(() => {
+        setShowStatusModal(false);
+      }, 2000);
+    }
+  };
+
   return (
     <section className="w-full">
+      <Modal isOpen={showStatusModal} message={message} type={status} />
       <div className="w-full flex items-center">
         <div className="bg-gray-300 relative w-35 h-35 rounded-full p-1 m-16 shadow-xl border-2 border-gray-200">
           <img
@@ -28,47 +58,58 @@ const ProfileSection = () => {
         </div>
       </div>
       <div className="bg-gray-100 border-[0.2px] border-gray-200 flex flex-col py-5 px-10 gap-1 text-gray-700 rounded-3xl shadow-md">
-        <form>
+        <form onSubmit={handleSubmit((data) => handleUpdate(data))}>
           <div className="flex flex-col gap-2.5">
             <p className="ml-3 font-medium">Nama</p>
             <InputText
+              {...register("fullName", {
+                required: "Name is required",
+              })}
+              defaultValue={user?.fullName}
+              validation={errors.fullName?.message}
               className={"font-normal min-w-52 bg-white w-[40%] px-3.5"}
-            ></InputText>
+            />
           </div>
           <div className="flex flex-col gap-2.5">
             <p className="ml-3 font-medium">Email</p>
             <InputText
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[^@]+@[^@]+\.[^@]+$/,
+                  message: "Email is not valid",
+                },
+              })}
+              defaultValue={user?.email}
+              validation={errors.email?.message}
               className={"font-normal min-w-52 bg-white w-[40%] px-3.5"}
-            ></InputText>
-          </div>
-          <div className="flex flex-col gap-2.5">
-            <p className="ml-3 font-medium">Email</p>
-            <InputText
-              className={"font-normal min-w-52 bg-white w-[40%] px-3.5"}
-            ></InputText>
+            />
           </div>
           <div className="flex flex-col gap-2.5">
             <p className="ml-3 font-medium">Nomor Telepon</p>
             <InputText
+              {...register("phoneNumber", {
+                pattern: {
+                  value: /^\+62\s?\d{9,13}$/,
+                  message: "Use +62 and numbers",
+                },
+              })}
+              defaultValue={user?.phoneNumber}
+              validation={errors.phoneNumber?.message}
               className={"font-normal min-w-52 bg-white w-[40%] px-3.5"}
-            ></InputText>
+            />
           </div>
           <div className="flex flex-col gap-2.5">
             <p className="ml-3 font-medium">Alamat</p>
             <textarea
-              name=""
+              {...register("address")}
+              defaultValue={user?.address}
               className="min-w-52 w-[65%] h-40 bg-white focus:outline-none rounded-2xl px-3.5 resize-none py-3.5"
               id=""
-            ></textarea>
-          </div>
-          <div className="flex flex-col gap-2.5 mt-5">
-            <p className="ml-3 font-medium">Password</p>
-            <InputText
-              className={"font-normal min-w-52 bg-white w-[40%] px-3.5"}
-            ></InputText>
+            />
           </div>
           <div className="flex justify-center mt-10">
-            <Button>Save Changes</Button>
+            <Button type={"submit"}>Save Changes</Button>
           </div>
         </form>
       </div>
