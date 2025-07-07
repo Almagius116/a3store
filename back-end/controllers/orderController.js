@@ -3,7 +3,7 @@ const sendResponse = require("../utils/sendResponse");
 
 const getAllOrder = async (req, res) => {
   try {
-    const orders = await orderService.getAllOrder();
+    const orders = await orderService.getAllOrder(req.query);
     sendResponse(res, 200, true, "Success get all order", { orders });
   } catch (err) {
     sendResponse(res, 500, false, err.message);

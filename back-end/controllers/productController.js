@@ -4,7 +4,6 @@ const sendResponse = require("../utils/sendResponse");
 const getAllProduct = async (req, res) => {
   try {
     const products = await productService.getAllProduct(req.query);
-    console.log("Prodak:", products);
     sendResponse(res, 200, true, "Success get all product", {
       products: products.rows,
       totalData: products.count,

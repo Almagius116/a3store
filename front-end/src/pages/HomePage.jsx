@@ -5,7 +5,7 @@ import img from "../assets/contoh1.jpg";
 import { useCallback, useEffect, useState } from "react";
 import SelectionButtonModal from "../components/modal/SelectionButtonModal";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { add } from "../features/info/infoSlice";
 import CheckBoxInput from "../components/input/CheckBoxInput";
 import PaginationSection from "../components/section/PaginationSection";
@@ -18,6 +18,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const getCategories = useCallback(() => getAllCategory(), []);
   const { data, loading, error } = useFetch(getCategories);
+  const user = useSelector((state) => state.user.user);
 
   const [selectedCategories, setSelectedCategories] = useState(0);
   const [profileMenuModal, setProfileMenuModal] = useState(false);
@@ -38,7 +39,7 @@ const HomePage = () => {
 
   const handleSelect = (option) => {
     setSelectedOption(option);
-    navigate("/profile");
+    navigate(`/user/${user.id}`);
   };
 
   const handleSearch = (minPrice, maxPrice, category) => {

@@ -7,9 +7,15 @@ import { useForm } from "react-hook-form";
 import img from "../assets/logo-bg-none.png";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Modal from "../components/modal/Modal";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [message, setMessage] = useState("");
 
   const {
     register,
@@ -21,9 +27,20 @@ const RegisterPage = () => {
     try {
       const { fullName, email, password } = data;
       const res = await registerUser({ fullName, email, password });
-      console.log(res);
+      setShowStatusModal(true);
+      setStatus(res.data.status);
+      setMessage("Registration successful.");
+      setTimeout(() => {
+        setShowStatusModal(false);
+        navigate("/signin");
+      }, 2000);
     } catch (err) {
-      console.log(err);
+      setShowStatusModal(true);
+      setStatus(err.response.data.status);
+      setMessage(err.response.data.message);
+      setTimeout(() => {
+        setShowStatusModal(false);
+      }, 2000);
     }
   };
 
@@ -37,6 +54,7 @@ const RegisterPage = () => {
 
   return (
     <>
+      <Modal isOpen={showStatusModal} message={message} type={status} />
       <div className="w-full h-full bg-indigo-400 flex">
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
           <InputCard className={"h-[420px] bg-white/45"}>

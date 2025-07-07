@@ -1,8 +1,26 @@
 const { Order, OrderItem, User, Product, sequelize } = require("../models");
 
-const getAllOrder = async () => {
+const getAllOrder = async (query) => {
+  const filterOrders = {};
+
+  if (query.userId != 0) {
+    filterOrders.userId = Number(query.userId);
+  }
+
   return await Order.findAll({
-    attributes: ["id"],
+    where: filterOrders,
+    include: [
+      {
+        model: OrderItem,
+        as: "orderItem",
+        include: [
+          {
+            model: Product,
+            as: "product",
+          },
+        ],
+      },
+    ],
   });
 };
 

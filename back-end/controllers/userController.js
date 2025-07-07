@@ -6,7 +6,10 @@ const register = async (req, res, next) => {
     const newUser = await userService.createUser(req.body);
     sendResponse(res, 201, true, "Success add user", { newUser });
   } catch (err) {
-    sendResponse(res, 500, false, err.message);
+    if ((err.errors[0].message = "email must be unique")) {
+      return sendResponse(res, 409, false, "Email already exists");
+    }
+    sendResponse(res, 500, false, err.errors[0].message);
   }
 };
 
@@ -15,7 +18,7 @@ const login = async (req, res, next) => {
     const result = await userService.login(req.body);
 
     if (!result) {
-      return sendResponse(res, 401, false, "Invalid credentials", null);
+      return sendResponse(res, 401, false, "Email not registered", null);
     }
 
     console.log("result: ", result);

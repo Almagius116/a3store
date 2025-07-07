@@ -10,3 +10,12 @@ export const getOrderById = async (id) => {
   const res = await axios.get(`/orders/${id}`);
   return res.data.data.order;
 };
+
+export const getAllOrders = async ({ userId }) => {
+  try {
+    const res = await axios.get(`/orders?userId=${userId}`);
+    return res.data.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

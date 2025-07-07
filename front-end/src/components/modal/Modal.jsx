@@ -1,23 +1,25 @@
-// src/components/Modal.jsx
-const Modal = ({ isOpen, onClose, title = "Modal Title", children }) => {
+import { CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
+
+const Modal = ({ isOpen, message, type }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/50 flex justify-center items-center">
-      <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative animate-fadeIn">
-        {/* Tombol close */}
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-red-500 text-xl"
-        >
-          &times;
-        </button>
+    <div className="fixed inset-0 z-50 flex justify-center">
+      <div className="bg-white rounded-4xl shadow-lg max-w-72 w-full p-6 py-3 relative animate-fadeIn h-40 mt-10">
+        <div className="w-full flex justify-center my-3">
+          {type === "Success" ? (
+            <div className="bg-green-500 p-2 rounded-full border border-green-300">
+              <CheckIcon className="w-5 h-5 text-white" />
+            </div>
+          ) : (
+            <div className="bg-red-500 p-2 rounded-full border border-red-300">
+              <XMarkIcon className="w-5 h-5 text-white" />
+            </div>
+          )}
+        </div>
+        <h2 className="text-xl font-bold text-center">{type}</h2>
 
-        {/* Judul */}
-        <h2 className="text-xl font-bold mb-4">{title}</h2>
-
-        {/* Isi konten */}
-        <div>{children}</div>
+        <div className="text-center my-3">{message}</div>
       </div>
     </div>
   );

@@ -8,9 +8,13 @@ import AuthInputText from "../components/input/AuthInputText";
 import img from "../assets/logo-bg-none.png";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import Modal from "../components/modal/Modal";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [message, setMessage] = useState("");
 
   const {
     register,
@@ -22,10 +26,21 @@ const LoginPage = () => {
   const handleLogin = async (data) => {
     try {
       const { email, password } = data;
-      await login({ email, password });
-      navigate("/");
+      const res = await login({ email, password });
+      setShowStatusModal(true);
+      setStatus(res.data.status);
+      setMessage(res.data.message);
+      setTimeout(() => {
+        setShowStatusModal(true);
+        navigate("/");
+      }, 2000);
     } catch (err) {
-      console.log(err);
+      setShowStatusModal(true);
+      setStatus(err.response.data.status);
+      setMessage(err.response.data.message);
+      setTimeout(() => {
+        setShowStatusModal(false);
+      }, 2000);
     }
   };
 
@@ -39,6 +54,7 @@ const LoginPage = () => {
 
   return (
     <>
+      <Modal isOpen={showStatusModal} message={message} type={status} />
       <div className="bg-indigo-400 w-full h-full">
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
           <InputCard className={"bg-white/45 grid h-96 py-13"}>

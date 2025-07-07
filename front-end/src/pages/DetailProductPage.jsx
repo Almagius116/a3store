@@ -1,22 +1,73 @@
-import { useParams } from "react-router-dom";
-import { useFetch } from "../hooks/useFetch";
-import { getProductById } from "../features/products/productService";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+
+import { useAuthCheck } from "../hooks/useAuthCheck";
+import { useFetch } from "../hooks/useFetch";
+
+import { getProductById } from "../features/products/productService";
 import { add } from "../features/cart/cartSlice";
+
 import Navbar from "../components/Navbar";
 import Button from "../components/buttons/Button";
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import ReviewsSection from "../components/section/ReviewsSection";
+import Modal from "../components/modal/Modal";
+
 import { rupiahFormat } from "../utils/helper";
 
 const DetailProductPage = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = useAuthCheck();
+  const cartItems = useSelector((state) => state.cart.items);
   const { id } = useParams();
   const fetchProductById = useCallback(() => getProductById(id), [id]);
-  const { data: product, loading, error } = useFetch(fetchProductById);
   const dispatch = useDispatch();
+  const { data: product, loading, error } = useFetch(fetchProductById);
+
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [message, setMessage] = useState("");
   const [counter, setCounter] = useState(1);
   const [selected, setSelected] = useState("detail");
+
+  const handleAddToCart = () => {
+    const itemExists = cartItems.find((item) => item.id === product.id);
+    if (isAuthenticated) {
+      if (itemExists) {
+        setStatus("Failed");
+        setMessage("This item already in cart");
+        setShowStatusModal(true);
+        setTimeout(() => {
+          setShowStatusModal(false);
+        }, 2000);
+      } else {
+        dispatch(
+          add({
+            id: product.id,
+            name: product.name,
+            qty: counter,
+            price: parseFloat(product.price),
+            totalPriceProduct: parseFloat(product.price) * counter,
+          })
+        );
+        setStatus("Success");
+        setMessage("Success add item to cart");
+        setShowStatusModal(true);
+        setTimeout(() => {
+          setShowStatusModal(false);
+        }, 2000);
+      }
+    } else {
+      setStatus("Failed");
+      setMessage("Redirect to sign in page");
+      setShowStatusModal(true);
+      setTimeout(() => {
+        setShowStatusModal(false);
+        navigate("/signin");
+      }, 2000);
+    }
+  };
 
   if (counter < 1) {
     setCounter(1);
@@ -28,6 +79,7 @@ const DetailProductPage = () => {
     <>
       <div className="w-full grid grid-cols-1">
         <Navbar />
+        <Modal isOpen={showStatusModal} type={status} message={message} />
         <section className="mt-20 w-full bg-gray-100 h-96 flex justify-center">
           <div className="w-[75%] max-w-[877px] flex gap-8 py-3.5">
             <div className="h-full bg-amber-200 w-[50%]  rounded-2xl">
@@ -66,21 +118,7 @@ const DetailProductPage = () => {
                       <PlusIcon className="h-4 w-4 text-gray-500" />
                     </Button>
                   </div>
-                  <Button
-                    onClick={() =>
-                      dispatch(
-                        add({
-                          id: product.id,
-                          name: product.name,
-                          qty: counter,
-                          price: parseFloat(product.price),
-                          totalPriceProduct:
-                            parseFloat(product.price) * counter,
-                        })
-                      )
-                    }
-                    className={"text-xs"}
-                  >
+                  <Button onClick={handleAddToCart} className={"text-xs"}>
                     ADD TO CART
                   </Button>
                 </div>
