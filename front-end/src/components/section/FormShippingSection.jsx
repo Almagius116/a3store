@@ -4,11 +4,12 @@ import {
   midtransPayment,
   createPayment,
 } from "../../features/payment/paymentService";
+import { updateOrder } from "../../features/order/orderService";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { createShipping } from "../../features/shipping/shippingService";
 
-const FormShippingSection = ({ order }) => {
+const FormShippingSection = ({ order, refetch }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const {
     register,
@@ -40,7 +41,9 @@ const FormShippingSection = ({ order }) => {
         onSuccess: (result) => {
           createPayment({ token, result });
           createShipping(shippingData);
+          updateOrder(order.id, { status: "paid" });
           alert("Pembayaran berhasil!");
+          refetch();
         },
         onPending: (result) => {
           createPayment({ token, result });

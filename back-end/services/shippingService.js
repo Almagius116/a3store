@@ -4,8 +4,16 @@ const createShipping = async (data) => {
   return await Shipping.create(data);
 };
 
-const getAllShipping = async () => {
-  return await Shipping.findAll();
+const getAllShipping = async (query) => {
+  const filterShipping = {};
+  console.log(query.orderId);
+  if (query.orderId != 0) {
+    filterShipping.orderId = Number(query.orderId);
+  }
+
+  return await Shipping.findAll({
+    where: filterShipping,
+  });
 };
 
 const getShippingById = async (id) => {

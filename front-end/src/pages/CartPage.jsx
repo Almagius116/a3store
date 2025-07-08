@@ -43,7 +43,6 @@ const CartPage = () => {
       });
       dispatch(resetCart());
       navigate(`/order/${res.data.data.newOrder.id}`);
-      console.log(res.data.data.newOrder.id);
     } catch (err) {
       console.log(err);
     }

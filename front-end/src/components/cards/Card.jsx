@@ -7,7 +7,6 @@ const Card = ({ product }) => {
   const handleClick = (id) => {
     navigate(`/detail-product/${id}`);
   };
-  console.log(product);
   return (
     <>
       <div
