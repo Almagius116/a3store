@@ -26,6 +26,14 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "CASCADE",
         onDelete: "SET NULL",
       },
+      recipientName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      phoneNumber: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
       address: {
         allowNull: false,
         type: DataTypes.TEXT,
@@ -34,19 +42,40 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
+      province: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
       postalCode: {
         allowNull: false,
         type: DataTypes.STRING,
       },
       shippingDate: DataTypes.DATE,
+      shippingMethod: {
+        allowNull: false,
+        type: DataTypes.STRING,
+        defaultValue: "N/A",
+      },
+      status: {
+        type: DataTypes.ENUM(
+          "pending",
+          "shipped",
+          "in-transit",
+          "delivered",
+          "failed"
+        ),
+        defaultValue: "pending",
+      },
       trackingNumber: {
         allowNull: false,
         type: DataTypes.STRING,
+        defaultValue: "N/A",
       },
     },
     {
       sequelize,
       modelName: "Shipping",
+      tableName: "Shippings",
     }
   );
   return Shipping;

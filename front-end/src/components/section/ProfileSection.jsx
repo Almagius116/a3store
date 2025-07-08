@@ -10,8 +10,13 @@ import Modal from "../modal/Modal";
 
 const ProfileSection = () => {
   const id = useSelector((state) => state.user.user.id);
-  const getUser = useCallback(() => profile(id), [id]);
-  const { data: res, loading, error } = useFetch(getUser);
+
+  const {
+    data: res,
+    loading,
+    error,
+  } = useFetch(useCallback(() => profile(id), [id]));
+
   const {
     register,
     handleSubmit,

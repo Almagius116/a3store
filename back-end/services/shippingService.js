@@ -1,17 +1,7 @@
 const { Shipping } = require("../models");
 
 const createShipping = async (data) => {
-  const { recipientName, phoneNumber, address, city, provice, postalCode } =
-    data;
-
-  return await Shipping.create({
-    recipientName,
-    phoneNumber,
-    address,
-    city,
-    provice,
-    postalCode,
-  });
+  return await Shipping.create(data);
 };
 
 const getAllShipping = async () => {
@@ -27,26 +17,7 @@ const updateShipping = async (id, data) => {
   if (!shipping) {
     return null;
   }
-  const {
-    recipientName,
-    phoneNumber,
-    address,
-    city,
-    provice,
-    postalCode,
-    shippingDate,
-    status,
-  } = data;
-  return await shipping.update({
-    recipientName,
-    phoneNumber,
-    address,
-    city,
-    provice,
-    postalCode,
-    shippingDate,
-    status,
-  });
+  return await shipping.update(data);
 };
 
 const deleteShipping = async (id, data) => {

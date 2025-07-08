@@ -19,3 +19,12 @@ export const getAllOrders = async ({ userId }) => {
     console.log(err);
   }
 };
+
+export const updateOrder = async (id, data) => {
+  try {
+    const res = await axios.patch(`/orders/${id}`, data);
+    return res.data.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

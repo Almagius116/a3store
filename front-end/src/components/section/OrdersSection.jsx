@@ -2,7 +2,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getAllOrders } from "../../features/order/orderService";
 import { useCallback } from "react";
 import { useFetch } from "../../hooks/useFetch";
-import { dateFormat, rupiahFormat } from "../../utils/helper";
+import {
+  capitalizeFirstLetter,
+  dateFormat,
+  rupiahFormat,
+} from "../../utils/helper";
 
 const OrdersSection = () => {
   const { id } = useParams();
@@ -46,7 +50,7 @@ const OrdersSection = () => {
                 <div className="text-xs">
                   <p>{rupiahFormat(order.totalPrice)}</p>
                   <p>
-                    Status : <span>{order.status}</span>
+                    Status : <span>{capitalizeFirstLetter(order.status)}</span>
                   </p>
                 </div>
               </div>

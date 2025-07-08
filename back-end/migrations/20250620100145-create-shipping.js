@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Shipping", {
+    await queryInterface.createTable("Shippings", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -55,7 +55,7 @@ module.exports = {
         type: Sequelize.ENUM(
           "pending",
           "shipped",
-          "in_transit",
+          "in-transit",
           "delivered",
           "failed"
         ),
@@ -79,6 +79,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Shipping");
+    await queryInterface.dropTable("Shippings");
   },
 };

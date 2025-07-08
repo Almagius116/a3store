@@ -12,3 +12,8 @@ export const dateFormat = (isoDate) => {
   });
   return formattedDate;
 };
+
+export const capitalizeFirstLetter = (word) => {
+  if (!word) return "";
+  return word.charAt(0).toUpperCase() + word.slice(1);
+};
