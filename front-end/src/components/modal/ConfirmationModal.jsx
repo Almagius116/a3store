@@ -1,6 +1,6 @@
 import Button from "../buttons/Button";
 
-const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
+const ConfirmationModal = ({ isOpen, onClose, onConfirm, message, btnMsg }) => {
   if (!isOpen) return null;
 
   return (
@@ -8,8 +8,8 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
       <div className="fixed inset-0 bg-gray-400 opacity-30 flex items-center justify-center z-30"></div>
       <div className="fixed  inset-0 z-50 flex items-center justify-center ">
         <div className="bg-white rounded-xl shadow-md p-6 w-full max-w-sm">
-          <h2 className="text-lg font-semibold mb-3">Konfirmasi pemesanan</h2>
-          <p className="mb-6">Apakah Anda yakin ingin melanjutkan pemesanan?</p>
+          <h2 className="text-lg font-semibold mb-3">Konfirmasi</h2>
+          <p className="mb-6">{message}</p>
           <div className="flex justify-end gap-4">
             <Button
               onClick={onClose}
@@ -17,7 +17,7 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm }) => {
             >
               Batal
             </Button>
-            <Button onClick={onConfirm}>Ya, Lanjutkan</Button>
+            <Button onClick={onConfirm}>{btnMsg}</Button>
           </div>
         </div>
       </div>

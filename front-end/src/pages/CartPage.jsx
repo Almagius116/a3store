@@ -7,6 +7,10 @@ import Navbar from "../components/Navbar";
 import ConfirmationModal from "../components/modal/ConfirmationModal";
 import { useNavigate } from "react-router-dom";
 import { resetCart } from "../features/cart/cartSlice";
+import { add, resetInfo } from "../features/info/infoSlice";
+import { resetUser } from "../features/auth/authSlice";
+import SelectionButtonModal from "../components/modal/SelectionButtonModal";
+import { logout } from "../features/auth/authService";
 
 const CartPage = () => {
   const items = useSelector((state) => state.cart.items);
@@ -16,6 +20,35 @@ const CartPage = () => {
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [profileMenuModal, setProfileMenuModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  useEffect(() => {
+    if (selectedOption !== null) {
+      dispatch(
+        add({
+          selectedInfo: selectedOption,
+        })
+      );
+    }
+  }, [selectedOption]);
+
+  const handleSelect = async (option) => {
+    try {
+      if (option === "Logout") {
+        await logout();
+        dispatch(resetUser());
+        dispatch(resetInfo());
+        dispatch(resetCart());
+        navigate("/signin");
+      } else {
+        setSelectedOption(option);
+        navigate(`/user/${userId}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     const total = items.reduce((sum, item) => sum + item.totalPriceProduct, 0);
@@ -58,8 +91,16 @@ const CartPage = () => {
         isOpen={showConfirmationModal}
         onClose={closeConfirmationModal}
         onConfirm={handleOrder}
+        message={"Apakah anda yakin ingin melanjutkan pemesanan?"}
+        btnMsg={"Ya, Lanjutkan"}
       />
-      <Navbar />
+      <Navbar userInfo={() => setProfileMenuModal(true)} />
+      <SelectionButtonModal
+        isOpen={profileMenuModal}
+        onClose={() => setProfileMenuModal(false)}
+        options={["Profile", "Notification", "History", "Orders", "Logout"]}
+        onSelect={handleSelect}
+      />
       <div className="mt-10 mb-52 flex flex-col items-center">
         <CartItem items={items} totalPrice={totalPrice} />
         <Button

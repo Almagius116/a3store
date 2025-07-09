@@ -1,21 +1,26 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { useAuthCheck } from "../hooks/useAuthCheck";
 import { useFetch } from "../hooks/useFetch";
 import { getProductById } from "../features/products/productService";
-import { add } from "../features/cart/cartSlice";
+import { add as addCart, resetCart } from "../features/cart/cartSlice";
+import { add as addInfo, resetInfo } from "../features/info/infoSlice";
 import { rupiahFormat } from "../utils/helper";
 import Navbar from "../components/Navbar";
 import Button from "../components/buttons/Button";
 import ReviewsSection from "../components/section/ReviewsSection";
 import Modal from "../components/modal/Modal";
+import SelectionButtonModal from "../components/modal/SelectionButtonModal";
+import { logout } from "../features/auth/authService";
+import { resetUser } from "../features/auth/authSlice";
 
 const DetailProductPage = () => {
   const navigate = useNavigate();
   const isAuthenticated = useAuthCheck();
   const cartItems = useSelector((state) => state.cart.items);
+  const user = useSelector((state) => state.user.user);
   const { id } = useParams();
   const fetchProductById = useCallback(() => getProductById(id), [id]);
   const dispatch = useDispatch();
@@ -26,6 +31,35 @@ const DetailProductPage = () => {
   const [message, setMessage] = useState("");
   const [counter, setCounter] = useState(1);
   const [selected, setSelected] = useState("detail");
+  const [profileMenuModal, setProfileMenuModal] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  useEffect(() => {
+    if (selectedOption !== null) {
+      dispatch(
+        addInfo({
+          selectedInfo: selectedOption,
+        })
+      );
+    }
+  }, [selectedOption]);
+
+  const handleSelect = async (option) => {
+    try {
+      if (option === "Logout") {
+        await logout();
+        dispatch(resetUser());
+        dispatch(resetInfo());
+        dispatch(resetCart());
+        navigate("/signin");
+      } else {
+        setSelectedOption(option);
+        navigate(`/user/${user.id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const handleAddToCart = () => {
     const itemExists = cartItems.find((item) => item.id === product.id);
@@ -39,7 +73,7 @@ const DetailProductPage = () => {
         }, 2000);
       } else {
         dispatch(
-          add({
+          addCart({
             id: product.id,
             name: product.name,
             qty: counter,
@@ -74,7 +108,13 @@ const DetailProductPage = () => {
   return (
     <>
       <div className="w-full grid grid-cols-1">
-        <Navbar />
+        <Navbar userInfo={() => setProfileMenuModal(true)} />
+        <SelectionButtonModal
+          isOpen={profileMenuModal}
+          onClose={() => setProfileMenuModal(false)}
+          options={["Profile", "Notification", "History", "Orders", "Logout"]}
+          onSelect={handleSelect}
+        />
         <Modal isOpen={showStatusModal} type={status} message={message} />
         <section className="mt-20 w-full bg-gray-100 h-96 flex justify-center">
           <div className="w-[75%] max-w-[877px] flex gap-8 py-3.5">

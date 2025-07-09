@@ -37,6 +37,20 @@ const login = async (req, res, next) => {
   }
 };
 
+const logout = async (req, res, next) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+    });
+
+    sendResponse(res, 200, true, "Logout successful");
+  } catch (err) {
+    sendResponse(res, 500, false, err.message);
+  }
+};
+
 const profile = async (req, res) => {
   try {
     sendResponse(res, 200, true, "Success", { user: req.user });
@@ -104,4 +118,5 @@ module.exports = {
   deleteUser,
   login,
   profile,
+  logout,
 };

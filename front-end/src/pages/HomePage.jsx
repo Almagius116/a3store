@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { add } from "../features/info/infoSlice";
+import { add, resetInfo } from "../features/info/infoSlice";
 import { getAllCategory } from "../features/categories/categoriesService";
 import { useFetch } from "../hooks/useFetch";
 import Category from "../components/Category";
@@ -12,6 +12,9 @@ import CheckBoxInput from "../components/input/CheckBoxInput";
 import PaginationSection from "../components/section/PaginationSection";
 import Button from "../components/buttons/Button";
 import img from "../assets/contoh1.jpg";
+import { logout } from "../features/auth/authService";
+import { resetUser } from "../features/auth/authSlice";
+import { resetCart } from "../features/cart/cartSlice";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -37,11 +40,22 @@ const HomePage = () => {
     }
   }, [selectedOption]);
 
-  const handleSelect = (option) => {
-    setSelectedOption(option);
-    navigate(`/user/${user.id}`);
+  const handleSelect = async (option) => {
+    try {
+      if (option === "Logout") {
+        await logout();
+        dispatch(resetUser());
+        dispatch(resetInfo());
+        dispatch(resetCart());
+        navigate("/signin");
+      } else {
+        setSelectedOption(option);
+        navigate(`/user/${user.id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
-
   const handleSearch = (minPrice, maxPrice, category) => {
     setMinPrice(minPrice);
     setMaxPrice(maxPrice);
