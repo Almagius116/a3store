@@ -9,6 +9,8 @@ import ProfilePage from "../pages/ProfilePage";
 import OrderPage from "../pages/OrderPage";
 import AdminPage from "../pages/admin/AdminPage";
 import AdminRoute from "../components/AdminRoute";
+import ManageOrder from "../pages/admin/ManageOrder";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -55,6 +57,14 @@ const router = createBrowserRouter([
     element: (
       <AdminRoute>
         <AdminPage />
+      </AdminRoute>
+    ),
+  },
+  {
+    path: "/manage-order/:id",
+    element: (
+      <AdminRoute>
+        <ManageOrder />
       </AdminRoute>
     ),
   },

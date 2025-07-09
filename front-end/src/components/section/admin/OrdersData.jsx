@@ -7,9 +7,12 @@ import {
   dateFormat,
   rupiahFormat,
 } from "../../../utils/helper";
+import { useNavigate } from "react-router-dom";
 
-const ManageOrders = () => {
+const OrdersData = () => {
   const [selectedFilter, setSelectedFilter] = useState("all");
+  const navigate = useNavigate();
+
   const getOrders = useCallback(() => {
     if (selectedFilter === "all") {
       return getAllOrders({ status: "" });
@@ -35,7 +38,14 @@ const ManageOrders = () => {
       <div className="bg-white rounded-xl h-[6000px] w-full mt-7">
         <DropdownButton
           label={selectedFilter}
-          options={["all", "pending", "paid", "canceled"]}
+          options={[
+            "all",
+            "pending",
+            "paid",
+            "shipped",
+            "completed",
+            "canceled",
+          ]}
           onSelect={handleSelect}
         />
         <div className="p-2 pl-5">
@@ -61,7 +71,10 @@ const ManageOrders = () => {
             </thead>
             <tbody>
               {data.orders.map((order, i) => (
-                <tr className="hover:bg-gray-200">
+                <tr
+                  onClick={() => navigate(`/manage-order/${order.id}`)}
+                  className="hover:bg-gray-200"
+                >
                   <td className="px-6 py-4 text-center">Order-{order.id}</td>
                   <td className="px-6 py-4 text-center">
                     {order.user.fullName}
@@ -75,6 +88,10 @@ const ManageOrders = () => {
                         order.status === "pending"
                           ? "bg-amber-100"
                           : order.status === "paid"
+                          ? "bg-blue-300"
+                          : order.status === "shipped"
+                          ? "bg-indigo-300"
+                          : order.status === "completed"
                           ? "bg-green-300"
                           : order.status === "canceled"
                           ? "bg-red-200"
@@ -97,4 +114,4 @@ const ManageOrders = () => {
   );
 };
 
-export default ManageOrders;
+export default OrdersData;
