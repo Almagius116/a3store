@@ -3,8 +3,12 @@ const { Order, OrderItem, User, Product, sequelize } = require("../models");
 const getAllOrder = async (query) => {
   const filterOrders = {};
 
-  if (query.userId != 0) {
+  if (query.userId && !isNaN(Number(query.userId))) {
     filterOrders.userId = Number(query.userId);
+  }
+
+  if (query.status) {
+    filterOrders.status = query.status;
   }
 
   return await Order.findAll({
@@ -19,6 +23,10 @@ const getAllOrder = async (query) => {
             as: "product",
           },
         ],
+      },
+      {
+        model: User,
+        as: "user",
       },
     ],
   });

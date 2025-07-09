@@ -19,14 +19,14 @@ const Navbar = ({ userInfo }) => {
     <>
       <div className="w-full py-2 px-[10%] shadow-md">
         <div className="w-full flex justify-between p-2 items-center">
-          <div>
-            <img src={`${logo}`} alt="" className="w-14 h-14" />
-          </div>
           <div className="flex items-center gap-20">
-            <div className="flex gap-5">
+            <div>
+              <img src={`${logo}`} alt="" className="w-14 h-14" />
+            </div>
+            <div className="flex gap-10">
               {user?.role === "admin" ? (
                 <LinkButton
-                  dest={"/"}
+                  dest={"/admin"}
                   className={
                     "bg-white/0 text-gray-500 shadow-none hover:bg-white/0 hover:text-gray-700 p-1"
                   }
@@ -45,17 +45,16 @@ const Navbar = ({ userInfo }) => {
                 Home
               </LinkButton>
             </div>
-
-            <div className="flex rounded-lg bg-gray-100">
-              <input
-                type="text"
-                placeholder="Search"
-                className="w-full focus:outline-none rounded-l-lg bg-gray-100 px-4 py-2.5 text-gray-600"
-              />
-              <button className="hover:bg-gray-200 px-4 rounded-lg">
-                <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
-              </button>
-            </div>
+          </div>
+          <div className="flex rounded-lg bg-gray-100">
+            <input
+              type="text"
+              placeholder="Search"
+              className="w-full focus:outline-none rounded-l-lg bg-gray-100 px-4 py-2.5 text-gray-600"
+            />
+            <button className="hover:bg-gray-200 px-4 rounded-lg">
+              <MagnifyingGlassIcon className="h-4 w-4 text-gray-400" />
+            </button>
           </div>
 
           <div className="flex gap-7 items-center">

@@ -10,9 +10,9 @@ export const getOrderById = async (id) => {
   return res.data.data.order;
 };
 
-export const getAllOrders = async ({ userId }) => {
+export const getAllOrders = async ({ userId, status }) => {
   try {
-    const res = await axios.get(`/orders?userId=${userId}`);
+    const res = await axios.get(`/orders?userId=${userId}&status=${status}`);
     return res.data.data;
   } catch (err) {
     console.log(err);
