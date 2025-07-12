@@ -118,7 +118,7 @@ const DetailProductPage = () => {
         <Modal isOpen={showStatusModal} type={status} message={message} />
         <section className="mt-20 w-full bg-gray-100 h-96 flex justify-center">
           <div className="w-[75%] max-w-[877px] flex gap-8 py-3.5">
-            <div className="h-full bg-amber-200 w-[50%]  rounded-2xl">
+            <div className="h-full bg-white w-[50%]  rounded-2xl border-2 border-gray-200">
               <img
                 className="h-full w-full object-cover rounded-2xl"
                 src={product.images[0]}

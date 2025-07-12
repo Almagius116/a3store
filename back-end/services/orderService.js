@@ -1,4 +1,12 @@
-const { Order, OrderItem, User, Product, sequelize } = require("../models");
+const {
+  Order,
+  OrderItem,
+  User,
+  Product,
+  Shipping,
+  Payment,
+  sequelize,
+} = require("../models");
 
 const getAllOrder = async (query) => {
   const filterOrders = {};
@@ -77,6 +85,14 @@ const getOrderById = async (id) => {
             as: "product",
           },
         ],
+      },
+      {
+        model: Shipping,
+        as: "shipping",
+      },
+      {
+        model: Payment,
+        as: "payment",
       },
     ],
   });

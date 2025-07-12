@@ -5,7 +5,7 @@ const shippingController = require("../controllers/shippingController");
 router.get("/", shippingController.getAllShipping);
 router.post("/", shippingController.createShipping);
 // router.get("/:id", categoryController.getCategoryById);
-// router.patch("/:id", categoryController.updateCategory);
+router.patch("/:id", shippingController.updateShipping);
 // router.delete("/:id", categoryController.deleteCategory);
 
 module.exports = router;

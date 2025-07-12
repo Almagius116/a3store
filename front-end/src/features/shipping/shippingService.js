@@ -13,3 +13,12 @@ export const getShippingByOrderId = async ({ orderId }) => {
     console.log(err);
   }
 };
+
+export const updateShipping = async (id, data) => {
+  try {
+    const res = await axios.patch(`/shipping/${id}`, data);
+    return res.data.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

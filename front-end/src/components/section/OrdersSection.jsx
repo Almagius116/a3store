@@ -10,12 +10,17 @@ import {
 
 const OrdersSection = () => {
   const { id } = useParams();
-  const getOrders = useCallback(() => getAllOrders({ userId: id }), [id]);
+  const getOrders = useCallback(
+    () => getAllOrders({ userId: id, status: "" }),
+    [id]
+  );
   const { data, loading, error } = useFetch(getOrders);
   const navigate = useNavigate();
 
   if (loading) return <p>Loading ...</p>;
   if (error) return <p>Terjadi Error: {error.message}</p>;
+
+  console.log(data);
 
   const handleOrderNavigation = (id) => {
     navigate(`/order/${id}`);
@@ -24,7 +29,7 @@ const OrdersSection = () => {
   return (
     <section className="w-full grid gap-1">
       <p className="font-bold text-gray-500">Orders</p>
-      {data.orders.map((order, i) => (
+      {data?.orders?.map((order, i) => (
         <div
           onClick={() => handleOrderNavigation(order.id)}
           key={i}
@@ -32,7 +37,7 @@ const OrdersSection = () => {
         >
           <div className=" bg-gray-100 grid grid-cols-2 text-sm p-1 px-2 rounded-xs min-h-20">
             <div className="text-[10px] pt-3">
-              {order.orderItem.map((item, i) => (
+              {order?.orderItem?.map((item, i) => (
                 <ul key={i}>
                   <li>
                     {i + 1}. {item.product.name} x {item.quantity}

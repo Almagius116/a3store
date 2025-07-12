@@ -3,7 +3,7 @@ import NavigationButtons from "../../components/section/admin/NavigationButtons"
 import OrdersData from "../../components/section/admin/OrdersData";
 
 const AdminPage = () => {
-  const [selectedSection, setSelectedSection] = useState("Dashboard");
+  const [selectedSection, setSelectedSection] = useState("Orders");
 
   const handleSelect = (section) => {
     setSelectedSection(section);

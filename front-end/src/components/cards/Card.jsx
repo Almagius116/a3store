@@ -10,11 +10,11 @@ const Card = ({ product }) => {
   return (
     <>
       <div
-        className="h-52 w-44 bg-gray-50 rounded-xl shadow-md"
+        className="h-52 w-44 bg-gray-50 rounded-xl shadow-md border border-gray-200"
         onClick={() => handleClick(product.id)}
       >
         <div className="grid p-1.5">
-          <div className="h-28 rounded-md overflow-hidden">
+          <div className="h-28 rounded-md overflow-hidden border border-gray-200">
             <img
               className="w-full h-full object-cover rounded-md"
               src={product.images[0]}
