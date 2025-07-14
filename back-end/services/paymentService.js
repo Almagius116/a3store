@@ -1,5 +1,6 @@
 const { Payment } = require("../models");
 const snap = require("../utils/midtrans");
+const { updateOrder } = require("./orderService");
 
 const createPayment = async (data) => {
   try {
@@ -41,6 +42,29 @@ const createPayment = async (data) => {
   }
 };
 
+const getAllPayment = async (query) => {
+  try {
+    const filterPayment = {};
+    if (query.orderId != 0) {
+      filterPayment.orderId = Number(query.orderId);
+    }
+
+    return await Payment.findAll({
+      where: filterPayment,
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+
+const updatePayment = async (id, data) => {
+  const payment = await Payment.findByPk(id);
+  if (!payment) {
+    return null;
+  }
+  return await payment.update(data);
+};
+
 const paymentMidtrans = async (data) => {
   try {
     const { orderId, amount, customerName, customerEmail } = data;
@@ -80,7 +104,6 @@ const midtransNotification = async (data) => {
       gross_amount,
       payment_type,
       transaction_status,
-      transaction_id,
     } = data;
 
     const transactionTime = new Date(transaction_time);
@@ -107,6 +130,13 @@ const midtransNotification = async (data) => {
         method: payment_type,
         amount: gross_amount,
       });
+      if (statusMap[transaction_status] === "success") {
+        const orderId = payment.orderId;
+        const status = "paid";
+        await updateOrder(orderId, {
+          status: status,
+        });
+      }
     }
   } catch (err) {
     console.log(err);
@@ -118,4 +148,6 @@ module.exports = {
   paymentMidtrans,
   createPayment,
   midtransNotification,
+  getAllPayment,
+  updatePayment,
 };

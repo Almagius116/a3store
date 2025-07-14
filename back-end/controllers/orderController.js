@@ -4,7 +4,6 @@ const sendResponse = require("../utils/sendResponse");
 const getAllOrder = async (req, res) => {
   try {
     const orders = await orderService.getAllOrder(req.query);
-    console.log(orders);
     sendResponse(res, 200, true, "Success get all order", { orders });
   } catch (err) {
     sendResponse(res, 500, false, err.message);
@@ -36,7 +35,6 @@ const getOrderById = async (req, res) => {
 
 const updateOrder = async (req, res) => {
   try {
-    console.log(req.params.id, req.body);
     const updatedOrder = await orderService.updateOrder(
       req.params.id,
       req.body

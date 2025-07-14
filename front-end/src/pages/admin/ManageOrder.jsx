@@ -74,7 +74,6 @@ const ManageOrder = () => {
     refetch();
   };
 
-  console.log(data);
   return (
     <div className="p-30 py-20">
       <Button

@@ -20,7 +20,6 @@ const getUserById = async (id) => {
 const updateUser = async (id, data) => {
   const user = await User.findByPk(id);
   if (!user) return null;
-  console.log(data);
   const { fullName, email, password, phoneNumber, address } = data;
   const updatedData = {
     fullName,

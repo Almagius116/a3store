@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { updateOrder } from "../../features/order/orderService";
 import { rupiahFormat } from "../../utils/helper";
 import Button from "../buttons/Button";
+import { updatePayment } from "../../features/payment/paymentService";
 
-const OrderItemsSection = ({ order, refetch }) => {
+const OrderItemsSection = ({ order, refetch, paymentId }) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const items = order.orderItem;
 
@@ -15,7 +16,9 @@ const OrderItemsSection = ({ order, refetch }) => {
 
   const handleCancelOrder = async (id) => {
     const status = "canceled";
+    const paymentStatus = "failed";
     await updateOrder(id, { status: status });
+    await updatePayment(paymentId, { status: paymentStatus });
     refetch();
   };
 

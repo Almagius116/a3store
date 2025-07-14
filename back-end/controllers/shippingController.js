@@ -12,7 +12,6 @@ const getAllShipping = async (req, res) => {
 
 const createShipping = async (req, res) => {
   try {
-    console.log(req.body);
     const newShipping = await shippingService.createShipping(req.body);
     sendResponse(res, 201, true, "Success add shipping", { newShipping });
   } catch (err) {
@@ -22,17 +21,16 @@ const createShipping = async (req, res) => {
 
 const updateShipping = async (req, res) => {
   try {
-    console.log(req.params.id, req.body);
     const updatedShipping = await shippingService.updateShipping(
       req.params.id,
       req.body
     );
 
     if (!updatedShipping) {
-      return sendResponse(res, 404, false, "Order not found", null);
+      return sendResponse(res, 404, false, "Shipping not found", null);
     }
 
-    sendResponse(res, 200, true, "Success update order", updatedShipping);
+    sendResponse(res, 200, true, "Success update shipping", updatedShipping);
   } catch (err) {
     sendResponse(res, 500, false, err.message);
   }

@@ -6,7 +6,6 @@ const createShipping = async (data) => {
 
 const getAllShipping = async (query) => {
   const filterShipping = {};
-  console.log(query.orderId);
   if (query.orderId != 0) {
     filterShipping.orderId = Number(query.orderId);
   }

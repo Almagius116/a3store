@@ -21,7 +21,6 @@ const login = async (req, res, next) => {
       return sendResponse(res, 401, false, "Email not registered", null);
     }
 
-    console.log("result: ", result);
     const { token, user } = result;
 
     res.cookie("token", token, {

@@ -8,9 +8,11 @@ import { updateOrder } from "../../features/order/orderService";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { createShipping } from "../../features/shipping/shippingService";
+import { useNavigate } from "react-router-dom";
 
 const FormShippingSection = ({ order, refetch }) => {
   const [isDisabled, setIsDisabled] = useState(true);
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -49,6 +51,7 @@ const FormShippingSection = ({ order, refetch }) => {
           createPayment({ token, result });
           createShipping(shippingData);
           alert("Menunggu pembayaran...");
+          navigate(0);
         },
         onError: (result) => {
           createPayment({ token, result });

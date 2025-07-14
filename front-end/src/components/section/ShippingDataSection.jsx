@@ -1,7 +1,34 @@
+import { useEffect, useState } from "react";
 import { capitalizeFirstLetter } from "../../utils/helper";
+import Button from "../buttons/Button";
+import { useNavigate } from "react-router-dom";
 
-const ShippingDataSection = ({ data }) => {
-  console.log(data.shipping[0]);
+const ShippingDataSection = ({ data, payment }) => {
+  const navigate = useNavigate();
+  const [payButton, setPayButton] = useState(false);
+
+  useEffect(() => {
+    const status = payment?.data?.data?.payment[0]?.status;
+    if (status === "pending") {
+      setPayButton(true);
+    } else {
+      setPayButton(false);
+    }
+  }, [payment]);
+
+  const handleResumePayment = async () => {
+    const token = payment?.data?.data?.payment[0]?.paymentToken;
+    window.snap.pay(token, {
+      onSuccess: () => {
+        alert("Pembayaran berhasil!");
+        navigate(0);
+      },
+      onClose: () => {
+        alert("Pembayaran berhasil.");
+      },
+    });
+  };
+
   return (
     <div className="text-gray-600">
       <p className="text-2xl font-medium">Data Pengiriman</p>
@@ -89,6 +116,19 @@ const ShippingDataSection = ({ data }) => {
           </tr>
         </tbody>
       </table>
+
+      <div className="flex justify-center mt-16">
+        {payButton ? (
+          <Button
+            onClick={handleResumePayment}
+            className={"px-10 py-4 rounded-xl text-md"}
+          >
+            Lanjutkan Pembayaran
+          </Button>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

@@ -12,7 +12,6 @@ import logo from "../assets/logo-bg-none.png";
 const Navbar = ({ userInfo }) => {
   const isAuthenticated = useAuthCheck();
   const user = useSelector((state) => state.user.user);
-  console.log(user);
   if (isAuthenticated === null) return <p>Loading...</p>;
 
   return (

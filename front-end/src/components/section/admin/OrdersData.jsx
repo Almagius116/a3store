@@ -30,8 +30,6 @@ const OrdersData = () => {
   if (loading) return <p>Loading ...</p>;
   if (error) return <p>Terjadi Error: {error.message}</p>;
 
-  console.log(data.orders);
-
   return (
     <div className="h-full">
       <p className=" text-2xl text-gray-500 font-semibold pl-7">Orders</p>

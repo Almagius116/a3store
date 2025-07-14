@@ -8,8 +8,6 @@ const AdminRoute = ({ children }) => {
 
   if (isAuthenticated === null) return <p>Loading...</p>;
 
-  console.log(user);
-
   return isAuthenticated && user.role === "admin" ? (
     children
   ) : (

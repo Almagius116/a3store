@@ -20,8 +20,6 @@ const OrdersSection = () => {
   if (loading) return <p>Loading ...</p>;
   if (error) return <p>Terjadi Error: {error.message}</p>;
 
-  console.log(data);
-
   const handleOrderNavigation = (id) => {
     navigate(`/order/${id}`);
   };

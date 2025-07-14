@@ -14,6 +14,7 @@ import { logout } from "../features/auth/authService";
 import { resetUser } from "../features/auth/authSlice";
 import { resetCart } from "../features/cart/cartSlice";
 import SelectionButtonModal from "../components/modal/SelectionButtonModal";
+import { getPaymentByOrderId } from "../features/payment/paymentService";
 
 const OrderPage = () => {
   const { id } = useParams();
@@ -32,6 +33,13 @@ const OrderPage = () => {
     loading: shippingLoading,
     error: shippingError,
   } = useFetch(useCallback(() => getShippingByOrderId({ orderId: id }), [id]));
+
+  const {
+    data: payment,
+    loading: paymentLoading,
+    error: paymentError,
+  } = useFetch(useCallback(() => getPaymentByOrderId({ orderId: id }), [id]));
+  console.log("payment di orderpage: ", payment);
 
   const [profileMenuModal, setProfileMenuModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -67,8 +75,9 @@ const OrderPage = () => {
   if (orderError) return <p>Terjadi error: {orderError.message}</p>;
   if (shippingLoading) return <p>Loading produk...</p>;
   if (shippingError) return <p>Terjadi error: {shippingError.message}</p>;
+  if (paymentLoading) return <p>Loading produk...</p>;
+  if (paymentError) return <p>Terjadi error: {shippingError.message}</p>;
 
-  console.log(shipping.shipping.length);
   return (
     <>
       <Navbar userInfo={() => setProfileMenuModal(true)} />
@@ -96,9 +105,17 @@ const OrderPage = () => {
               </span>
             </div>
             <div className="grid gap-32">
-              <OrderItemsSection order={order} refetch={refetch} />
+              <OrderItemsSection
+                order={order}
+                refetch={refetch}
+                paymentId={payment?.data?.data?.payment[0]?.id}
+              />
               {shipping.shipping.length > 0 ? (
-                <ShippingDataSection data={shipping} />
+                <ShippingDataSection
+                  data={shipping}
+                  payment={payment}
+                  id={id}
+                />
               ) : (
                 <FormShippingSection order={order} refetch={refetch} />
               )}
