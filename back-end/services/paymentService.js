@@ -51,6 +51,7 @@ const getAllPayment = async (query) => {
 
     return await Payment.findAll({
       where: filterPayment,
+      order: [["createdAt", "DESC"]],
     });
   } catch (err) {
     throw err;

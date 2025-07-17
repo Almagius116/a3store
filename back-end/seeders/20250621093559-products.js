@@ -180,7 +180,7 @@ module.exports = {
           description: "Keyboard wireless compact untuk laptop/tablet",
           price: 650000,
           stock: 20,
-          imgaes: [
+          images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/keyboard.png?updatedAt=1752125358809",
           ],
           createdAt: new Date(),

@@ -57,7 +57,7 @@ const LoginPage = () => {
       <Modal isOpen={showStatusModal} message={message} type={status} />
       <div className="bg-indigo-400 w-full h-full">
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
-          <InputCard className={"bg-white/45 grid h-96 py-13"}>
+          <InputCard className={"bg-white/45 grid h-[420px] py-13"}>
             <div className="grid gap-3">
               <div className="flex justify-center">
                 <img className="w-16 h-16" src={img} />
@@ -122,6 +122,13 @@ const LoginPage = () => {
                     </Button>
                   </div>
                 </form>
+                <div className="flex justify-center mt-6">
+                  <a href="http://localhost:3000/api/v1/users/google">
+                    <Button className={"bg-indigo-400"}>
+                      Login dengan Google
+                    </Button>
+                  </a>
+                </div>
               </div>
             </div>
           </InputCard>

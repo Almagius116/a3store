@@ -10,6 +10,8 @@ import OrderPage from "../pages/OrderPage";
 import AdminPage from "../pages/admin/AdminPage";
 import AdminRoute from "../components/AdminRoute";
 import ManageOrder from "../pages/admin/ManageOrder";
+import LoginGoogleRedirect from "../pages/LoginGoogleRedirect";
+import VerifyOtpPage from "../pages/VerifyOtpPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,11 @@ const router = createBrowserRouter([
     path: "/signin",
     element: <LoginPage />,
   },
+  {
+    path: "/login/google-redirect",
+    element: <LoginGoogleRedirect />,
+  },
+  { path: "/verify-otp", element: <VerifyOtpPage /> },
   {
     path: "/signup",
     element: <RegisterPage />,

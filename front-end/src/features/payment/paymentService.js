@@ -17,6 +17,5 @@ export const getPaymentByOrderId = async ({ orderId }) => {
 
 export const updatePayment = async (id, data) => {
   const res = await axios.patch(`/payments/${id}`, data);
-  console.log("respon dari update payment dari be: ", res);
   return res;
 };

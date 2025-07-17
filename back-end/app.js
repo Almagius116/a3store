@@ -2,10 +2,11 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const app = express();
+const passport = require("passport");
+require("./config/passport");
 
 const router = require("./routes");
-
-const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
@@ -15,6 +16,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(passport.initialize());
 
 const PORT = process.env.PORT || 3000;
 

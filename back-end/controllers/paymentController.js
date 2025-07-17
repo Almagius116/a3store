@@ -3,7 +3,6 @@ const sendResponse = require("../utils/sendResponse");
 
 const getAllPayment = async (req, res) => {
   try {
-    console.log("inidia: ", req.query);
     const payment = await paymentService.getAllPayment(req.query);
     sendResponse(res, 201, true, "Success get payment", { payment });
   } catch (err) {

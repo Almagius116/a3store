@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const userService = require("../services/userService");
 const sendResponse = require("../utils/sendResponse");
 
@@ -33,6 +34,67 @@ const login = async (req, res, next) => {
     sendResponse(res, 200, true, "Login successful", { user });
   } catch (err) {
     sendResponse(res, 500, false, err.message);
+  }
+};
+
+const googleCallBack = async (req, res) => {
+  const result = req.user;
+
+  if (result.needOTP) {
+    const { googleProfile } = result;
+
+    return res.redirect(
+      `${process.env.CLIENT_URL}/verify-otp?email=${result.user.email}&googleId=${googleProfile.googleId}&fullName=${googleProfile.fullName}&profilePicture=${googleProfile.profilePicture}`
+    );
+  }
+
+  const token = jwt.sign(
+    {
+      id: result.user.id,
+      email: result.user.email,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "Lax",
+    maxAge: 60 * 60 * 1000,
+  });
+
+  return res.redirect(`${process.env.CLIENT_URL}/login/google-redirect`);
+};
+
+const verifyOtp = async (req, res) => {
+  try {
+    const { email, otp, googleId, fullName, profilePicture } = req.body;
+
+    const user = await userService.verifyOTPAndMerge(email, otp, {
+      googleId,
+      fullName,
+      profilePicture,
+    });
+
+    const token = jwt.sign(
+      { id: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.status(200).json({ message: "Akun digabung & login sukses", user });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 };
 
@@ -118,4 +180,6 @@ module.exports = {
   login,
   profile,
   logout,
+  googleCallBack,
+  verifyOtp,
 };

@@ -39,7 +39,6 @@ const OrderPage = () => {
     loading: paymentLoading,
     error: paymentError,
   } = useFetch(useCallback(() => getPaymentByOrderId({ orderId: id }), [id]));
-  console.log("payment di orderpage: ", payment);
 
   const [profileMenuModal, setProfileMenuModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);

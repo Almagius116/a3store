@@ -41,6 +41,20 @@ module.exports = (sequelize, DataTypes) => {
       profilePicture: {
         type: DataTypes.TEXT,
       },
+      provider: {
+        type: DataTypes.ENUM("local", "google"),
+        allowNull: false,
+        defaultValue: "local",
+      },
+      googleId: {
+        type: DataTypes.STRING,
+      },
+      otpCode: {
+        type: DataTypes.STRING,
+      },
+      otpExpiry: {
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,

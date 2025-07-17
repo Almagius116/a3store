@@ -38,6 +38,20 @@ module.exports = {
         defaultValue:
           "https://ik.imagekit.io/a3store/profile-default.png?updatedAt=1751311555417",
       },
+      provider: {
+        type: Sequelize.ENUM("local", "google"),
+        allowNull: false,
+        defaultValue: "local",
+      },
+      googleId: {
+        type: Sequelize.STRING,
+      },
+      otpCode: {
+        type: Sequelize.STRING,
+      },
+      otpExpiry: {
+        type: Sequelize.DATE,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
