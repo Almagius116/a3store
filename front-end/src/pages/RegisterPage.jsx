@@ -58,7 +58,7 @@ const RegisterPage = () => {
       <div className="w-full h-full bg-indigo-400 flex">
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
           <InputCard className={"h-[420px] bg-white/45"}>
-            <div className="absolute top-[15%] left-1/2 -translate-x-1/2">
+            <div className="absolute top-[12%] left-1/2 -translate-x-1/2">
               <img className="w-16 h-16" src={img} />
             </div>
             <div className="absolute top-1/2 -translate-y-[25%] left-1/2 -translate-x-1/2">

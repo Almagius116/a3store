@@ -14,6 +14,7 @@ const Navbar = ({ userInfo }) => {
   const user = useSelector((state) => state.user.user);
   if (isAuthenticated === null) return <p>Loading...</p>;
 
+  console.log("iniprofpic: ", user.profilePic);
   return (
     <>
       <div className="w-full py-2 px-[10%] shadow-md">

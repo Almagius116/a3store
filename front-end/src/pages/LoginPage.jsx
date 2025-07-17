@@ -9,6 +9,7 @@ import LinkButton from "../components/link/LinkButton";
 import AuthInputText from "../components/input/AuthInputText";
 import Modal from "../components/modal/Modal";
 import img from "../assets/logo-bg-none.png";
+import googleLogo from "../assets/google-logo.png";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -57,7 +58,7 @@ const LoginPage = () => {
       <Modal isOpen={showStatusModal} message={message} type={status} />
       <div className="bg-indigo-400 w-full h-full">
         <div className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2">
-          <InputCard className={"bg-white/45 grid h-[420px] py-13"}>
+          <InputCard className={"bg-white/45 grid h-[440px] py-13"}>
             <div className="grid gap-3">
               <div className="flex justify-center">
                 <img className="w-16 h-16" src={img} />
@@ -108,7 +109,7 @@ const LoginPage = () => {
                       Forgot password?
                     </LinkButton>
                   </div>
-                  <div className="text-[12px] flex items-center justify-end gap-[70px] mt-4">
+                  <div className="text-[12px] flex items-center justify-end gap-[60px] mt-4">
                     <LinkButton
                       dest={"/signup"}
                       className={
@@ -118,15 +119,20 @@ const LoginPage = () => {
                       SIGN UP
                     </LinkButton>
                     <Button type={"submit"} className={"pt-2 "}>
-                      LOG IN
+                      SIGN IN
                     </Button>
                   </div>
                 </form>
-                <div className="flex justify-center mt-6">
-                  <a href="http://localhost:3000/api/v1/users/google">
-                    <Button className={"bg-indigo-400"}>
-                      Login dengan Google
-                    </Button>
+                <div className="flex gap-3 items-center mt-3">
+                  <div className="bg-black opacity-20 h-[1px] w-44 rounded-full"></div>
+                </div>
+                <div className="flex justify-center mt-3">
+                  <a
+                    href="http://localhost:3000/api/v1/users/google"
+                    className="flex items-center p-1 px-8 rounded-md bg-white hover:bg-gray-100 hover:border-gray-500 transition duration-500 border border-gray-100"
+                  >
+                    <img src={`${googleLogo}`} className="w-7 h-7"></img>
+                    <div className="p-3 px-1 text-xs">Sign in with Google</div>
                   </a>
                 </div>
               </div>
