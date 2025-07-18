@@ -37,6 +37,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
+          //6
           name: "Tablet",
           description: "Tablet layar sentuh berbagai ukuran",
           createdAt: new Date(),
@@ -67,6 +68,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
+          //11
           name: "Monitor",
           description: "Layar monitor berbagai ukuran",
           createdAt: new Date(),
@@ -97,6 +99,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
+          //16
           name: "Kipas Angin Elektrik",
           description: "Kipas angin listrik meja dan dinding",
           createdAt: new Date(),
@@ -121,6 +124,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
+          //20
           name: "Proyektor",
           description: "Proyektor untuk presentasi dan hiburan",
           createdAt: new Date(),

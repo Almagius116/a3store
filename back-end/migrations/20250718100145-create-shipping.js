@@ -31,13 +31,15 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT,
       },
-      city: {
+      cityId: {
         allowNull: false,
-        type: Sequelize.STRING,
-      },
-      province: {
-        allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Cities",
+          key: "cityId",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
       },
       postalCode: {
         allowNull: false,
@@ -45,6 +47,10 @@ module.exports = {
       },
       shippingDate: {
         type: Sequelize.DATE,
+      },
+      totalWeight: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       shippingMethod: {
         allowNull: false,

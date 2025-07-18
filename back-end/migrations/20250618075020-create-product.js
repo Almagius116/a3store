@@ -40,6 +40,10 @@ module.exports = {
           "https://ik.imagekit.io/a3store/imageicon-removebg-preview.png?updatedAt=1751747756275",
         ],
       },
+      weight: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

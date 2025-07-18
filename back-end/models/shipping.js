@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "orderId",
         as: "order",
       });
+      Shipping.belongsTo(models.City, {
+        foreignKey: "cityId",
+        as: "city",
+      });
     }
   }
   Shipping.init(
@@ -38,19 +42,25 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.TEXT,
       },
-      city: {
+      cityId: {
         allowNull: false,
-        type: DataTypes.STRING,
-      },
-      province: {
-        allowNull: false,
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Cities",
+          key: "cityId",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
       },
       postalCode: {
         allowNull: false,
         type: DataTypes.STRING,
       },
       shippingDate: DataTypes.DATE,
+      totalWeight: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       shippingMethod: {
         allowNull: false,
         type: DataTypes.STRING,

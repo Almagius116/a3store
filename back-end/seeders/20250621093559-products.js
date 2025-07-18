@@ -8,13 +8,14 @@ module.exports = {
       [
         {
           categoryId: 11,
-          name: "Sharp PowerLite",
-          description: "Sharp PowerLite",
+          name: "Monitor Sharp",
+          description: "Monitor Sharp",
           price: 3223287,
           stock: 1,
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/monitor.jpeg?updatedAt=1752125362403",
           ],
+          weight: 6000,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -27,6 +28,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/proyektor.jpeg?updatedAt=1752125357817",
           ],
+          weight: 4000,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -39,6 +41,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/Canon%20EOS%201500D.png?updatedAt=1752125364675",
           ],
+          weight: 900,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -51,6 +54,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/Acer%20ProMax.jpg?updatedAt=1752125363451",
           ],
+          weight: 1600,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -63,6 +67,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/monitor.jpeg?updatedAt=1752125362403",
           ],
+          weight: 6000,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -75,6 +80,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/hp.jpeg?updatedAt=1752125362749",
           ],
+          weight: 220,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -87,6 +93,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/headset.jpeg?updatedAt=1752125362507",
           ],
+          weight: 175,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -99,6 +106,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/Canon%20EOS%201500D.png?updatedAt=1752125364675",
           ],
+          weight: 890,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -111,6 +119,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/tablet.jpeg?updatedAt=1752125362269",
           ],
+          weight: 510,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -123,6 +132,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/smartwatch.png?updatedAt=1752125362546",
           ],
+          weight: 50,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -135,6 +145,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/speaker.jpg?updatedAt=1752125362798",
           ],
+          weight: 700,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -147,6 +158,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/printer.jpeg?updatedAt=1752125362298",
           ],
+          weight: 5000,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -159,6 +171,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/tv.jpeg?updatedAt=1752125362357",
           ],
+          weight: 7500,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -171,6 +184,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/hp.jpeg?updatedAt=1752125362749",
           ],
+          weight: 210,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -183,6 +197,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/keyboard.png?updatedAt=1752125358809",
           ],
+          weight: 800,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -195,6 +210,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/mouse.jpg?updatedAt=1752125357605",
           ],
+          weight: 130,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -207,6 +223,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/powerbank.jpg?updatedAt=1752125358255",
           ],
+          weight: 380,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -219,6 +236,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/charger.jpeg?updatedAt=1752125358073",
           ],
+          weight: 130,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -231,6 +249,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/kipas%20angin.jpg?updatedAt=1752125357199",
           ],
+          weight: 4500,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -243,6 +262,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/ac.jpg?updatedAt=1752125358215",
           ],
+          weight: 11800,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -255,6 +275,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/kulkas.jpeg?updatedAt=1752125357506",
           ],
+          weight: 34000,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -267,6 +288,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/kulkas.jpeg?updatedAt=1752125357506",
           ],
+          weight: 32000,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -279,6 +301,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/proyektor.jpeg?updatedAt=1752125357817",
           ],
+          weight: 3500,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -291,6 +314,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/harddiskeksternal.jpeg?updatedAt=1752125357464",
           ],
+          weight: 220,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -303,6 +327,7 @@ module.exports = {
           images: [
             "https://ik.imagekit.io/a3store/fotodummycategory/flashdisk.jpg?updatedAt=1752125338578",
           ],
+          weight: 12,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
