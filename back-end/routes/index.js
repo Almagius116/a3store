@@ -8,6 +8,8 @@ const OrderItem = require("./orderItemRoutes");
 const Payment = require("./paymentRoutes");
 const UploadImage = require("./uploadImageRoutes");
 const Shipping = require("./shippingRoutes");
+const Province = require("./provinceRoutes");
+const City = require("./cityRoutes");
 
 router.use("/users", User);
 router.use("/categories", Category);
@@ -17,5 +19,7 @@ router.use("/order-items", OrderItem);
 router.use("/payments", Payment);
 router.use("/upload", UploadImage);
 router.use("/shipping", Shipping);
+router.use("/provinces", Province);
+router.use("/cities", City);
 
 module.exports = router;

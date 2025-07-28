@@ -5,13 +5,18 @@ import {
   createPayment,
 } from "../../features/payment/paymentService";
 import { updateOrder } from "../../features/order/orderService";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { createShipping } from "../../features/shipping/shippingService";
 import { useNavigate } from "react-router-dom";
+import ListButton from "../buttons/ListButton";
+import { getAllProvince } from "../../features/province/provinceService";
+import { useFetch } from "../../hooks/useFetch";
+import { getAllCity } from "../../features/city/cityService";
 
 const FormShippingSection = ({ order, refetch }) => {
   const [isDisabled, setIsDisabled] = useState(true);
+  const [selectedProvince, setSelectedProvince] = useState(null);
   const navigate = useNavigate();
   const {
     register,
@@ -19,11 +24,27 @@ const FormShippingSection = ({ order, refetch }) => {
     formState: { errors },
   } = useForm();
 
+  const getCities = useCallback(
+    () => getAllCity({ provinceId: selectedProvince.provinceId }),
+    [selectedProvince]
+  );
+  const { data: cities, citiesLoading, citiesError } = useFetch(getCities);
+
+  const {
+    data: provinces,
+    loading: provinceLoading,
+    error: provinceError,
+  } = useFetch(useCallback(() => getAllProvince(), []));
+
   useEffect(() => {
     if (order.status === "pending") {
       setIsDisabled(false);
     }
   }, [order.status]);
+
+  const handleSelectedProvince = (province) => {
+    setSelectedProvince(province);
+  };
 
   const handlePayment = async (order, data) => {
     try {
@@ -65,89 +86,117 @@ const FormShippingSection = ({ order, refetch }) => {
       console.error(err);
     }
   };
+
+  if (provinceLoading) return <p>Loading province...</p>;
+  if (provinceError) return <p>Terjadi error: {provinceError.message}</p>;
+  if (citiesLoading) return <p>Loading province...</p>;
+  if (citiesError) return <p>Terjadi error: {provinceError.message}</p>;
+
+  console.log("cities: ", cities);
+
   return (
-    <form onSubmit={handleSubmit((data) => handlePayment(order, data))}>
-      <p className="text-2xl ml-2 font-medium text-gray-500">Data Pengiriman</p>
-      <div className="text-sm text-gray-600 mt-10">
-        <div className="grid grid-cols-2 gap-7 lg:gap-14">
+    <>
+      <form onSubmit={handleSubmit((data) => handlePayment(order, data))}>
+        <p className="text-2xl ml-2 font-medium text-gray-500">
+          Data Pengiriman
+        </p>
+        <div className="text-sm text-gray-600 mt-10">
+          <div className="grid grid-cols-2 gap-7 lg:gap-14">
+            <div className="grid gap-2">
+              <p className="ml-4">Nama Penerima</p>
+              <InputText
+                {...register("recipientName", {
+                  required: "Nama Penerima harus di isi",
+                })}
+                validation={errors.recipientName?.message}
+                className={
+                  "w-full border border-gray-300 focus:border-gray-400"
+                }
+              />
+            </div>
+            <div className="grid gap-2">
+              <p className="ml-4">Nomor Telepon</p>
+              <InputText
+                {...register("phoneNumber", {
+                  required: "Nomor Telepon harus di isi",
+                  pattern: {
+                    value: /^\+62\s?\d{9,13}$/,
+                    message: "Format: +62 (Nomor telepon)",
+                  },
+                })}
+                validation={errors.phoneNumber?.message}
+                className={
+                  "w-full border border-gray-300 focus:border-gray-400"
+                }
+              />
+            </div>
+          </div>
           <div className="grid gap-2">
-            <p className="ml-4">Nama Penerima</p>
+            <p className="ml-4">Alamat</p>
             <InputText
-              {...register("recipientName", {
-                required: "Nama Penerima harus di isi",
+              {...register("address", {
+                required: "Alamat harus di isi",
               })}
-              validation={errors.recipientName?.message}
+              validation={errors.address?.message}
               className={"w-full border border-gray-300 focus:border-gray-400"}
             />
           </div>
-          <div className="grid gap-2">
-            <p className="ml-4">Nomor Telepon</p>
-            <InputText
-              {...register("phoneNumber", {
-                required: "Nomor Telepon harus di isi",
-                pattern: {
-                  value: /^\+62\s?\d{9,13}$/,
-                  message: "Format: +62 (Nomor telepon)",
-                },
-              })}
-              validation={errors.phoneNumber?.message}
-              className={"w-full border border-gray-300 focus:border-gray-400"}
+          <div className="grid grid-cols-3 gap-7 lg:gap-14">
+            {/* <div className="grid gap-2">
+              <p className="ml-4">Kota / Kabupaten</p>
+              <InputText
+                {...register("city", {
+                  required: "Kota / Kabupaten harus di isi",
+                })}
+                validation={errors.city?.message}
+                className={
+                  "w-full border border-gray-300 focus:border-gray-400"
+                }
+              />
+            </div>
+            <div className="grid gap-2">
+              <p className="ml-4">Provinsi</p>
+              <InputText
+                {...register("province", {
+                  required: "Provinsi harus di isi",
+                })}
+                validation={errors.province?.message}
+                className={
+                  "w-full border border-gray-300 focus:border-gray-400"
+                }
+              />
+            </div>
+            <div className="grid gap-2">
+              <p className="ml-4">Kode Pos</p>
+              <InputText
+                {...register("postalCode", {
+                  required: "Kode Pos harus di isi",
+                })}
+                validation={errors.postalCode?.message}
+                className={
+                  "w-full border border-gray-300 focus:border-gray-400"
+                }
+              />
+            </div> */}
+            <ListButton
+              data={provinces.provinces}
+              handleSelect={handleSelectedProvince}
             />
+            {/* <ListButton />
+            <ListButton /> */}
           </div>
         </div>
-        <div className="grid gap-2">
-          <p className="ml-4">Alamat</p>
-          <InputText
-            {...register("address", {
-              required: "Alamat harus di isi",
-            })}
-            validation={errors.address?.message}
-            className={"w-full border border-gray-300 focus:border-gray-400"}
-          />
+        <div className="mt-10 flex justify-center">
+          <Button
+            type={"submit"}
+            isDisabled={isDisabled}
+            className={"px-10 py-4 rounded-xl text-md"}
+          >
+            Bayar Sekarang
+          </Button>
         </div>
-        <div className="grid grid-cols-3 gap-7 lg:gap-14">
-          <div className="grid gap-2">
-            <p className="ml-4">Kota / Kabupaten</p>
-            <InputText
-              {...register("city", {
-                required: "Kota / Kabupaten harus di isi",
-              })}
-              validation={errors.city?.message}
-              className={"w-full border border-gray-300 focus:border-gray-400"}
-            />
-          </div>
-          <div className="grid gap-2">
-            <p className="ml-4">Provinsi</p>
-            <InputText
-              {...register("province", {
-                required: "Provinsi harus di isi",
-              })}
-              validation={errors.province?.message}
-              className={"w-full border border-gray-300 focus:border-gray-400"}
-            />
-          </div>
-          <div className="grid gap-2">
-            <p className="ml-4">Kode Pos</p>
-            <InputText
-              {...register("postalCode", {
-                required: "Kode Pos harus di isi",
-              })}
-              validation={errors.postalCode?.message}
-              className={"w-full border border-gray-300 focus:border-gray-400"}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="mt-10 flex justify-center">
-        <Button
-          type={"submit"}
-          isDisabled={isDisabled}
-          className={"px-10 py-4 rounded-xl text-md"}
-        >
-          Bayar Sekarang
-        </Button>
-      </div>
-    </form>
+      </form>
+    </>
   );
 };
 
