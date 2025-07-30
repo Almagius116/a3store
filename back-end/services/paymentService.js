@@ -76,7 +76,7 @@ const paymentMidtrans = async (data) => {
       },
     });
 
-    const midtransOrderId = `ORDER-${orderId}-v${count + 1}`;
+    const midtransOrderId = `ORDER-${orderId}-v2${count + 1}`;
 
     const param = {
       transaction_details: {

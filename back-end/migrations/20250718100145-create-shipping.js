@@ -41,6 +41,14 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "SET NULL",
       },
+      districtId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      districtName: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
       postalCode: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -55,7 +63,9 @@ module.exports = {
       shippingMethod: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: "N/A",
+      },
+      shippingCost: {
+        type: Sequelize.DECIMAL,
       },
       status: {
         type: Sequelize.ENUM(

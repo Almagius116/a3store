@@ -15,6 +15,7 @@ const createShipping = async (req, res) => {
     const newShipping = await shippingService.createShipping(req.body);
     sendResponse(res, 201, true, "Success add shipping", { newShipping });
   } catch (err) {
+    console.log(err);
     sendResponse(res, 500, false, err.message);
   }
 };
@@ -36,8 +37,30 @@ const updateShipping = async (req, res) => {
   }
 };
 
+const getDistrict = async (req, res) => {
+  try {
+    const district = await shippingService.getDistrict(req.query);
+    sendResponse(res, 200, true, "Success get district by city Id", {
+      district,
+    });
+  } catch (err) {
+    sendResponse(res, 500, false, err.message);
+  }
+};
+
+const calculateShippingCost = async (req, res) => {
+  try {
+    const data = await shippingService.calculateShippingCost(req.body);
+    sendResponse(res, 200, true, "Success get Raja Ongkir shipping", data);
+  } catch (err) {
+    sendResponse(res, 500, false, err.message);
+  }
+};
+
 module.exports = {
   createShipping,
   getAllShipping,
   updateShipping,
+  getDistrict,
+  calculateShippingCost,
 };

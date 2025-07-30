@@ -52,6 +52,14 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: "CASCADE",
         onDelete: "SET NULL",
       },
+      districtId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      districtName: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
       postalCode: {
         allowNull: false,
         type: DataTypes.STRING,
@@ -64,8 +72,8 @@ module.exports = (sequelize, DataTypes) => {
       shippingMethod: {
         allowNull: false,
         type: DataTypes.STRING,
-        defaultValue: "N/A",
       },
+      shippingCost: DataTypes.DECIMAL,
       status: {
         type: DataTypes.ENUM(
           "pending",

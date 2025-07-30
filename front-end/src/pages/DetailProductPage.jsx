@@ -78,7 +78,7 @@ const DetailProductPage = () => {
             name: product.name,
             qty: counter,
             price: parseFloat(product.price),
-            totalPriceProduct: parseFloat(product.price) * counter,
+            weight: product.weight,
           })
         );
         setStatus("Success");

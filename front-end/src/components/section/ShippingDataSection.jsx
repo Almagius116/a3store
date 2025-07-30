@@ -1,20 +1,62 @@
 import { useEffect, useState } from "react";
-import { capitalizeFirstLetter } from "../../utils/helper";
+import { capitalizeFirstLetter, rupiahFormat } from "../../utils/helper";
 import Button from "../buttons/Button";
 import { useNavigate } from "react-router-dom";
+import {
+  midtransPayment,
+  createPayment,
+} from "../../features/payment/paymentService";
+import { updateOrder } from "../../features/order/orderService";
 
-const ShippingDataSection = ({ data, payment }) => {
+const ShippingDataSection = ({ data, payment, order, refetch }) => {
   const navigate = useNavigate();
+  const [nextPayButton, setNextPayButton] = useState(false);
   const [payButton, setPayButton] = useState(false);
 
   useEffect(() => {
-    const status = payment?.data?.data?.payment[0]?.status;
-    if (status === "pending") {
-      setPayButton(true);
-    } else {
-      setPayButton(false);
+    const paymentStatus = payment?.data?.data?.payment?.[0]?.status;
+    const orderStatus = order?.status;
+
+    setNextPayButton(paymentStatus === "pending");
+    setPayButton(orderStatus === "pending");
+  }, [payment, order]);
+
+  const handlePayment = async () => {
+    try {
+      const res = await midtransPayment({
+        orderId: order.id,
+        amount:
+          parseInt(order.totalPrice) + parseInt(data.shipping[0].shippingCost),
+        customerName: order.user.fullName,
+        customerEmail: order.user.email,
+      });
+
+      const token = res.data.data.paymentToken;
+
+      window.snap.pay(token, {
+        onSuccess: (result) => {
+          createPayment({ token, result });
+          updateOrder(order.id, { status: "paid" });
+          alert("Pembayaran berhasil!");
+          refetch();
+        },
+        onPending: (result) => {
+          createPayment({ token, result });
+          alert("Menunggu pembayaran...");
+          navigate(0);
+        },
+        onError: (result) => {
+          createPayment({ token, result });
+          alert("Gagal membayar");
+        },
+        onClose: () => {
+          alert("Popup ditutup tanpa menyelesaikan pembayaran");
+        },
+      });
+    } catch (err) {
+      console.error(err);
     }
-  }, [payment]);
+  };
 
   const handleResumePayment = async () => {
     const token = payment?.data?.data?.payment[0]?.paymentToken;
@@ -63,7 +105,7 @@ const ShippingDataSection = ({ data, payment }) => {
               Kota / Kabupaten
             </td>
             <td className="px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 break-words whitespace-pre-wrap">
-              {data.shipping[0].city}
+              {data.shipping[0].city.cityName}
             </td>
           </tr>
           <tr>
@@ -71,7 +113,7 @@ const ShippingDataSection = ({ data, payment }) => {
               Provinsi
             </td>
             <td className="px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 break-words whitespace-pre-wrap">
-              {data.shipping[0].province}
+              {data.shipping[0].city.province.provinceName}
             </td>
           </tr>
           <tr>
@@ -84,18 +126,37 @@ const ShippingDataSection = ({ data, payment }) => {
           </tr>
           <tr>
             <td className="whitespace-nowrap px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 border-l-2 w-[30%]">
-              Tanggal Pengiriman
-            </td>
-            <td className="px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 break-words whitespace-pre-wrap">
-              {data.shipping[0].shippingDate}
-            </td>
-          </tr>
-          <tr>
-            <td className="whitespace-nowrap px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 border-l-2 w-[30%]">
               Metode Pengiriman
             </td>
             <td className="px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 break-words whitespace-pre-wrap">
               {data.shipping[0].shippingMethod}
+            </td>
+          </tr>
+          <tr>
+            <td className="whitespace-nowrap px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 border-l-2 w-[30%]">
+              Harga Pengiriman
+            </td>
+            <td className="px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 break-words whitespace-pre-wrap">
+              {rupiahFormat(data.shipping[0].shippingCost)}
+            </td>
+          </tr>
+          <tr>
+            <td className="whitespace-nowrap px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 border-l-2 w-[30%]">
+              Total Harga
+            </td>
+            <td className="px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 break-words whitespace-pre-wrap">
+              {rupiahFormat(
+                parseInt(order.totalPrice) +
+                  parseInt(data.shipping[0].shippingCost)
+              )}
+            </td>
+          </tr>
+          <tr>
+            <td className="whitespace-nowrap px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 border-l-2 w-[30%]">
+              Tanggal Pengiriman
+            </td>
+            <td className="px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 break-words whitespace-pre-wrap">
+              {data.shipping[0].shippingDate}
             </td>
           </tr>
           <tr>
@@ -117,8 +178,18 @@ const ShippingDataSection = ({ data, payment }) => {
         </tbody>
       </table>
 
-      <div className="flex justify-center mt-16">
+      <div className="flex justify-center mt-16 gap-5">
         {payButton ? (
+          <Button
+            onClick={handlePayment}
+            className={"px-10 py-4 rounded-xl text-md"}
+          >
+            Bayar Sekarang
+          </Button>
+        ) : (
+          ""
+        )}
+        {nextPayButton ? (
           <Button
             onClick={handleResumePayment}
             className={"px-10 py-4 rounded-xl text-md"}

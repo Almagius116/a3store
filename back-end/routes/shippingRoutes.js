@@ -4,8 +4,8 @@ const shippingController = require("../controllers/shippingController");
 
 router.get("/", shippingController.getAllShipping);
 router.post("/", shippingController.createShipping);
-// router.get("/:id", categoryController.getCategoryById);
+router.post("/calculate-cost", shippingController.calculateShippingCost);
+router.get("/get-district", shippingController.getDistrict);
 router.patch("/:id", shippingController.updateShipping);
-// router.delete("/:id", categoryController.deleteCategory);
 
 module.exports = router;

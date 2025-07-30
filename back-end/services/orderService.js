@@ -41,13 +41,13 @@ const getAllOrder = async (query) => {
 };
 
 const createOrder = async (data) => {
+  let transaction;
   try {
-    const { userId, items, totalPrice } = data;
-
-    const transaction = await sequelize.transaction();
+    const { userId, items, totalPrice, totalWeight } = data;
+    transaction = await sequelize.transaction();
 
     const newOrder = await Order.create(
-      { userId, totalPrice },
+      { userId, totalPrice, totalWeight },
       { transaction: transaction }
     );
 
@@ -65,7 +65,7 @@ const createOrder = async (data) => {
   } catch (err) {
     await transaction.rollback();
     console.log(err);
-    return null;
+    throw err;
   }
 };
 

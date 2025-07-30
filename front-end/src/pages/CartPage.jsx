@@ -17,6 +17,7 @@ const CartPage = () => {
   const userId = useSelector((state) => state.user.user.id);
   const [isDisabled, setIsDisabled] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [totalWeight, setTotalWeight] = useState(0);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -51,8 +52,16 @@ const CartPage = () => {
   };
 
   useEffect(() => {
-    const total = items.reduce((sum, item) => sum + item.totalPriceProduct, 0);
-    setTotalPrice(total);
+    const countPrice = items.reduce(
+      (sum, item) => sum + item.price * item.qty,
+      0
+    );
+    const countweight = items.reduce(
+      (sum, item) => sum + item.weight * item.qty,
+      0
+    );
+    setTotalPrice(countPrice);
+    setTotalWeight(countweight);
   }, [items]);
 
   useEffect(() => {
@@ -73,6 +82,7 @@ const CartPage = () => {
           unitPrice: item.price,
         })),
         totalPrice: totalPrice,
+        totalWeight: totalWeight,
       });
       dispatch(resetCart());
       navigate(`/order/${res.data.data.newOrder.id}`);

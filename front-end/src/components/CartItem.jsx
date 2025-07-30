@@ -81,7 +81,7 @@ const CartItem = ({ items, totalPrice }) => {
                       <XMarkIcon className="w-4 h-4 text-gray-500 hover:text-gray-800" />
                     </Button>
                   </div>
-                  {rupiahFormat(item.totalPriceProduct)}
+                  {rupiahFormat(item.price * item.qty)}
                 </td>
               </tr>
             ))}

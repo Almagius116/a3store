@@ -15,6 +15,7 @@ import { resetUser } from "../features/auth/authSlice";
 import { resetCart } from "../features/cart/cartSlice";
 import SelectionButtonModal from "../components/modal/SelectionButtonModal";
 import { getPaymentByOrderId } from "../features/payment/paymentService";
+import SelectShippingMethod from "../components/section/SelectShippingMethod";
 
 const OrderPage = () => {
   const { id } = useParams();
@@ -109,14 +110,21 @@ const OrderPage = () => {
                 refetch={refetch}
                 paymentId={payment?.data?.data?.payment[0]?.id}
               />
-              {shipping.shipping.length > 0 ? (
+              {shipping.shipping.length === 0 ? (
+                <FormShippingSection order={order} refetch={refetch} />
+              ) : !shipping.shipping[0].shippingCost ? (
+                <SelectShippingMethod
+                  data={shipping}
+                  price={order.totalPrice}
+                />
+              ) : (
                 <ShippingDataSection
                   data={shipping}
                   payment={payment}
+                  order={order}
                   id={id}
+                  refetch={refetch}
                 />
-              ) : (
-                <FormShippingSection order={order} refetch={refetch} />
               )}
             </div>
           </div>

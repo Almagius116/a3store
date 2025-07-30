@@ -22,3 +22,21 @@ export const updateShipping = async (id, data) => {
     console.log(err);
   }
 };
+
+export const getDistrict = async ({ cityId }) => {
+  try {
+    const res = await axios.get(`/shipping/get-district?cityId=${cityId}`);
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const calculateShippingCost = async (data) => {
+  try {
+    const res = await axios.post(`/shipping/calculate-cost`, data);
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
