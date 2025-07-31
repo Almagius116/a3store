@@ -69,6 +69,7 @@ const googleLogin = async (data) => {
   const fullName = data.displayName;
   const googleId = data.id;
   const profilePicture = data.photos[0].value;
+  console.log("ini pp :", profilePicture);
 
   const user = await User.findOne({
     where: { email },

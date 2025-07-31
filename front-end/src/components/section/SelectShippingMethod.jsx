@@ -62,7 +62,7 @@ const SelectShippingMethod = ({ data, price }) => {
         <div
           key={i}
           onClick={() => handleSelect(item)}
-          className={`w-full bg-gray-200 rounded-md flex gap-5 p-5 shadow-md hover:border hover:border-gray-300 ${
+          className={`w-full bg-gray-200 rounded-md flex gap-5 p-5 shadow-md hover:border-2 hover:border-blue-400 ${
             selectedMethod?.service === item.service
               ? "border-2 border-blue-500"
               : ""

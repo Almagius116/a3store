@@ -13,7 +13,7 @@ const Navbar = ({ userInfo }) => {
   const isAuthenticated = useAuthCheck();
   const user = useSelector((state) => state.user.user);
   if (isAuthenticated === null) return <p>Loading...</p>;
-
+  if (!user) return <p>loading</p>;
   console.log("iniprofpic: ", user?.profilePic);
   return (
     <>

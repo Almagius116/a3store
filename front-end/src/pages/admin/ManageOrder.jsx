@@ -74,6 +74,8 @@ const ManageOrder = () => {
     refetch();
   };
 
+  console.log(data);
+
   return (
     <div className="p-30 py-20">
       <Button
@@ -190,7 +192,7 @@ const ManageOrder = () => {
                   Total Harga Dibayar
                 </td>
                 <td className="px-6 py-8 font-medium border-r-1 border-b-1 border-gray-300 break-words whitespace-pre-wrap border-t-1">
-                  {rupiahFormat(data.payment[0].amount)}
+                  {rupiahFormat(data?.payment[0]?.amount)}
                 </td>
               </tr>
 
@@ -199,7 +201,7 @@ const ManageOrder = () => {
                   Metode Pembayaran
                 </td>
                 <td className="px-6 py-8 font-medium border-r-1 border-b-1 border-gray-300 break-words whitespace-pre-wrap border-t-1">
-                  {replaceFormatText(data.payment[0].method)}
+                  {replaceFormatText(data?.payment[0]?.method)}
                 </td>
               </tr>
               <tr>
@@ -207,7 +209,7 @@ const ManageOrder = () => {
                   Tanggal Pembayaran
                 </td>
                 <td className="px-6 py-8 font-medium border-r-1 border-b-1 border-gray-300 break-words whitespace-pre-wrap border-t-1">
-                  {dateFormat(data.payment[0].updatedAt)}
+                  {dateFormat(data?.payment[0]?.updatedAt)}
                 </td>
               </tr>
               <tr>
@@ -215,7 +217,7 @@ const ManageOrder = () => {
                   Status Pembayaran
                 </td>
                 <td className="px-6 py-8 font-medium border-r-1 border-b-1 border-gray-300 break-words whitespace-pre-wrap border-t-1">
-                  {capitalizeFirstLetter(data.payment[0].status)}
+                  {capitalizeFirstLetter(data?.payment[0]?.status)}
                 </td>
               </tr>
             </tbody>
@@ -255,7 +257,7 @@ const ManageOrder = () => {
                   Kota / Kabupaten
                 </td>
                 <td className="px-6 py-8 font-medium border-r-1 border-b-1 border-gray-300 break-words whitespace-pre-wrap border-t-1">
-                  {data?.shipping?.city}
+                  {data?.shipping?.city?.cityName}
                 </td>
               </tr>
               <tr>
@@ -263,15 +265,7 @@ const ManageOrder = () => {
                   Provinsi
                 </td>
                 <td className="px-6 py-8 font-medium border-r-1 border-b-1 border-gray-300 break-words whitespace-pre-wrap border-t-1">
-                  {data?.shipping?.province}
-                </td>
-              </tr>
-              <tr>
-                <td className="whitespace-nowrap px-6 py-8 font-medium border-r-1 border-b-1 border-gray-300 border-l-1 w-[30%] border-t-1">
-                  Kode Pos
-                </td>
-                <td className="px-6 py-8 font-medium border-r-1 border-b-1 border-gray-300 break-words whitespace-pre-wrap border-t-1">
-                  {data?.shipping?.postalCode}
+                  {data?.shipping?.city?.province?.provinceName}
                 </td>
               </tr>
               <tr>
@@ -287,7 +281,9 @@ const ManageOrder = () => {
                   Tanggal Pengiriman
                 </td>
                 <td className="px-6 py-8 font-medium border-r-1 border-b-1 border-gray-300 break-words whitespace-pre-wrap border-t-1">
-                  {dateFormat(data?.shipping?.shippingDate)}
+                  {data.shipping.shippingDate
+                    ? dateFormat(data.shipping.shippingDate)
+                    : ""}
                 </td>
               </tr>
               <tr>

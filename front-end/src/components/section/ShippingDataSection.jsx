@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { capitalizeFirstLetter, rupiahFormat } from "../../utils/helper";
+import {
+  capitalizeFirstLetter,
+  dateFormat,
+  rupiahFormat,
+} from "../../utils/helper";
 import Button from "../buttons/Button";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,6 +16,8 @@ const ShippingDataSection = ({ data, payment, order, refetch }) => {
   const navigate = useNavigate();
   const [nextPayButton, setNextPayButton] = useState(false);
   const [payButton, setPayButton] = useState(false);
+
+  console.log(data.shipping[0].shippingDate);
 
   useEffect(() => {
     const paymentStatus = payment?.data?.data?.payment?.[0]?.status;
@@ -156,7 +162,9 @@ const ShippingDataSection = ({ data, payment, order, refetch }) => {
               Tanggal Pengiriman
             </td>
             <td className="px-6 py-8 font-medium border-r-2 border-b-2 border-gray-300 break-words whitespace-pre-wrap">
-              {data.shipping[0].shippingDate}
+              {data.shipping[0].shippingDate
+                ? dateFormat(data.shipping[0].shippingDate)
+                : ""}
             </td>
           </tr>
           <tr>

@@ -51,7 +51,8 @@ const googleCallBack = async (req, res) => {
   const token = jwt.sign(
     {
       id: result.user.id,
-      email: result.user.email,
+      role: result.user.role,
+      profilePic: result.user.profilePicture,
     },
     process.env.JWT_SECRET,
     { expiresIn: "1h" }

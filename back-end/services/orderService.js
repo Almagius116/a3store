@@ -5,6 +5,8 @@ const {
   Product,
   Shipping,
   Payment,
+  City,
+  Province,
   sequelize,
 } = require("../models");
 
@@ -89,6 +91,18 @@ const getOrderById = async (id) => {
       {
         model: Shipping,
         as: "shipping",
+        include: [
+          {
+            model: City,
+            as: "city",
+            include: [
+              {
+                model: Province,
+                as: "province",
+              },
+            ],
+          },
+        ],
       },
       {
         model: Payment,
